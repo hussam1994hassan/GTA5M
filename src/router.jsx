@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router";
 import PagesURL from "./constants/PagesURL";
 import IndexPage from "./pages/guest/IndexPage";
 import DashboardPage from "./pages/auth/DashboardPage";
-import LoginPage from "./pages/guest/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import GuestLayout from "./layouts/GuestLayout";
 import AuthLayout from "./layouts/AuthLayout";

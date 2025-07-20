@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
-import ASideMenu from "../components/ASideMenu";
+import Background from "../layouts/Background";
 import LoadingComponent from "../components/LoadingComponent";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -20,19 +20,24 @@ const AuthLayout = () => {
     }
 
     return (
-        <>
-            <Toaster reverseOrder={false} />
-            <div className="flex">
-                <ASideMenu />
-                <div className="flex-1 min-h-screen flex flex-col">
-                    <HeaderComponent />
-                    <div className="bg-gray-800 h-auto min-h-[calc(100vh-195px)] flex items-start justify-start p-10 box-border">
-                        <Outlet />
-                    </div>
-                    <FooterComponent />
-                </div>
-            </div>
-        </>
+      
+    <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden relative">
+      <Toaster position="top-center" reverseOrder={false} />
+      {/* Background Layer - Fixed position with all effects */}
+      <Background />
+      
+      {/* Header Layer - Fixed navigation */}
+      <HeaderComponent />
+      
+      {/* Main Content Layer */}
+      <main className="relative z-20">
+        <Outlet />
+      </main>
+      
+      {/* Footer Layer */}
+      <FooterComponent />
+    </div>
+     
     );
 };
 

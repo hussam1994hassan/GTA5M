@@ -414,7 +414,28 @@ const toggleMode = () => {
                         className="w-5 h-5 bg-gray-800 border border-gray-600 rounded text-emerald-400 focus:ring-emerald-400 focus:ring-2"
                       />
                       <span className="text-gray-300 font-mono text-sm group-hover:text-white transition-colors">
-                        I accept the <span className="text-emerald-400 hover:text-cyan-400 transition-colors cursor-pointer">Vault Terms</span> and <span className="text-emerald-400 hover:text-cyan-400 transition-colors cursor-pointer">Security Protocol</span>
+                        I accept the
+                        <a
+                          href="/terms"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-emerald-400 hover:text-cyan-400 underline mx-1 transition-colors cursor-pointer"
+                          tabIndex={-1}
+                          onClick={e => e.stopPropagation()} // عشان الكليك متأثرش على الليبول كـ checkbox
+                        >
+                          Vault Terms
+                        </a>
+                        and
+                        <a
+                          href="/privacy"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-emerald-400 hover:text-cyan-400 underline mx-1 transition-colors cursor-pointer"
+                          tabIndex={-1}
+                          onClick={e => e.stopPropagation()}
+                        >
+                          Security Protocol
+                        </a>
                       </span>
                     </label>
                     {errors.acceptTerms && (

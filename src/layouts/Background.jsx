@@ -1,233 +1,221 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 
 const Background = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  // Slow matrix rain animation
+  const createMatrixVariants = () => ({
+    animate: {
+      y: ['-100vh', '100vh'],
+      opacity: [0, 0.8, 0.8, 0],
+      transition: {
+        duration: Math.random() * 4 + 6, // Slower: 6-10 seconds
+        repeat: Infinity,
+        ease: 'linear',
+        times: [0, 0.2, 0.8, 1],
+        delay: Math.random() * 8 // More delayed start
+      }
+    }
+  });
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  // City skyline parallax animation
+  const cityVariants = {
+    animate: {
+      x: ['-100%', '100%'],
+      transition: {
+        duration: 20,
+        repeat: Infinity,
+        ease: 'linear'
+      }
+    }
+  };
+
+  // Holographic UI elements
+  const holoVariants = {
+    animate: {
+      opacity: [0.3, 0.8, 0.3],
+      scale: [0.98, 1.02, 0.98],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: 'easeInOut'
+      }
+    }
+  };
+
+  // Neon glow pulse
+  const neonPulse = {
+    animate: {
+      boxShadow: [
+        '0 0 20px rgba(0, 255, 255, 0.3)',
+        '0 0 40px rgba(0, 255, 255, 0.7)',
+        '0 0 20px rgba(0, 255, 255, 0.3)'
+      ],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: 'easeInOut'
+      }
+    }
+  };
+
+  // Data stream animation
+  const dataStream = {
+    animate: {
+      y: [0, -100],
+      opacity: [0, 1, 0],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: 'easeOut'
+      }
+    }
+  };
+
+  const matrixChars = ['01', '10', '11', '00', '101', '010', '110', '001'];
+  const codeElements = [
+    'function()', 'const x =', 'if (true)', 'return;', 'async/await',
+    'class {}', 'import *', 'export {}', 'try/catch', 'Promise.then()',
+    'console.log', '=> arrow', '&& ||', '!== ===', 'null undefined',
+    'API.call()', 'JSON.parse', 'fetch()', 'React.useState', 'useEffect'
+  ];
+  
+  const gtaElements = ['Vice City', 'Los Santos', 'Liberty City', 'WANTED', 'GTA VI', '★★★★★'];
+  const cyberpunkElements = ['NEURAL LINK', 'CYBER DECK', 'NET RUNNER', 'BRAIN DANCE', 'CORPO', 'SAMURAI'];
 
   return (
-    <>
-      {/* Advanced Cyberpunk Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        {/* Matrix Rain Effect */}
-        <div className="absolute inset-0">
-          {[...Array(50)].map((_, i) => (
-            <div 
-              key={i}
-              className="absolute text-cyan-400/30 font-mono text-sm matrix-rain"
-              style={{
-                left: `${i * 2}%`,
-                animationDelay: `${Math.random() * 5}s`
-              }}
-            >
-              {['01', '10', '11', '00', '01', '10'][Math.floor(Math.random() * 6)]}
-            </div>
-          ))}
-        </div>
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-gradient-to-b from-gray-900 via-purple-900/20 to-black">
+      
+      {/* Animated City Skyline - GTA Style */}
 
-        {/* Cyberpunk Grid System */}
-        <div 
-          className="absolute inset-0 opacity-15 cyberpunk-grid"
-          style={{
-            transform: `translate(${mousePosition.x * 0.03}px, ${mousePosition.y * 0.03}px)`,
-          }}
-        ></div>
-        
-        {/* Neon Orbs with Glow */}
-        <div className="absolute top-1/5 left-1/8 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl animate-pulse shadow-2xl shadow-cyan-500/20"></div>
-        <div className="absolute bottom-1/5 right-1/6 w-80 h-80 bg-purple-500/12 rounded-full blur-3xl animate-pulse shadow-2xl shadow-purple-500/20 delay-2000"></div>
-        <div className="absolute top-3/5 left-3/4 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl animate-pulse shadow-2xl shadow-yellow-500/15 delay-4000"></div>
-        <div className="absolute top-1/2 left-1/6 w-48 h-48 bg-green-500/8 rounded-full blur-3xl animate-pulse shadow-2xl shadow-green-500/10 delay-6000"></div>
 
-        {/* Floating Programming Elements */}
-        <div className="absolute inset-0 font-mono opacity-8">
-          {[
-            '{ code }', '[ array ]', '< html >', '( function )', '// comment', 
-            '=== true', '!== false', '=> arrow', '&& and', '|| or',
-            'const', 'let', 'var', 'function', 'return', 'import', 'export',
-            'async', 'await', 'promise', 'callback', 'null', 'undefined'
-          ].map((symbol, i) => (
-            <div 
-              key={i}
-              className={`absolute code-float ${i % 4 === 0 ? 'text-cyan-400' : i % 4 === 1 ? 'text-purple-400' : i % 4 === 2 ? 'text-yellow-400' : 'text-green-400'}`}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                fontSize: `${10 + Math.random() * 8}px`,
-                animationDelay: `${Math.random() * 8}s`
-              }}
-            >
-              {symbol}
-            </div>
-          ))}
-        </div>
+      {/* Slow Matrix Digital Rain */}
+      <div className="absolute inset-0">
+        {[...Array(60)].map((_, i) => (
+          <motion.div 
+            key={i}
+            className="absolute text-green-400/60 font-mono font-bold"
+            style={{
+              left: `${Math.random() * 100}%`,
+              fontSize: `${12 + Math.random() * 8}px`,
+              textShadow: '0 0 10px currentColor'
+            }}
+            variants={createMatrixVariants()}
+            animate="animate"
+          >
+            {matrixChars[Math.floor(Math.random() * matrixChars.length)]}
+          </motion.div>
+        ))}
 
-        {/* Glitch Lines */}
-        <div className="absolute inset-0">
-          {[...Array(10)].map((_, i) => (
-            <div 
-              key={i}
-              className="absolute w-full h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent glitch-line"
-              style={{
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Scanlines */}
-        <div className="absolute inset-0 opacity-5 scanlines"></div>
-
-        {/* Neural Network Connections */}
-        <div className="absolute inset-0">
-          <svg className="w-full h-full opacity-10">
-            {[...Array(15)].map((_, i) => (
-              <g key={i}>
-                <line 
-                  x1={`${Math.random() * 100}%`} 
-                  y1={`${Math.random() * 100}%`} 
-                  x2={`${Math.random() * 100}%`} 
-                  y2={`${Math.random() * 100}%`} 
-                  stroke="url(#grad1)" 
-                  strokeWidth="1"
-                  className="animate-pulse"
-                  style={{animationDelay: `${Math.random() * 3}s`}}
-                />
-                <circle 
-                  cx={`${Math.random() * 100}%`} 
-                  cy={`${Math.random() * 100}%`} 
-                  r="2" 
-                  fill="currentColor" 
-                  className="text-cyan-400 animate-pulse"
-                  style={{animationDelay: `${Math.random() * 3}s`}}
-                />
-              </g>
-            ))}
-            <defs>
-              <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style={{stopColor: 'rgb(6, 182, 212)', stopOpacity: 0}} />
-                <stop offset="50%" style={{stopColor: 'rgb(6, 182, 212)', stopOpacity: 0.5}} />
-                <stop offset="100%" style={{stopColor: 'rgb(147, 51, 234)', stopOpacity: 0}} />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
+        {/* Additional slower binary rain */}
+        {[...Array(40)].map((_, i) => (
+          <motion.div 
+            key={`binary-${i}`}
+            className="absolute text-cyan-400/40 font-mono"
+            style={{
+              left: `${Math.random() * 100}%`,
+              fontSize: `${8 + Math.random() * 6}px`,
+              textShadow: '0 0 5px currentColor'
+            }}
+            animate={{
+              y: ['-100vh', '100vh'],
+              opacity: [0, 0.6, 0.6, 0],
+              transition: {
+                duration: Math.random() * 6 + 8, // Even slower: 8-14 seconds
+                repeat: Infinity,
+                ease: 'linear',
+                delay: Math.random() * 10
+              }
+            }}
+          >
+            {Math.random() > 0.5 ? '1' : '0'}
+          </motion.div>
+        ))}
       </div>
 
-      {/* Background Styles */}
-      <style jsx>{`
-        .matrix-rain {
-          animation: matrixRain 3s linear infinite;
-        }
+      {/* Holographic Programming Panels */}
+      <div className="absolute inset-0">
+        {[...Array(8)].map((_, i) => (
+          <motion.div 
+            key={`holo-${i}`}
+            className="absolute border border-cyan-400/30 bg-cyan-900/10 backdrop-blur-sm rounded-lg p-4"
+            style={{
+              left: `${Math.random() * 80}%`,
+              top: `${Math.random() * 80}%`,
+              width: `${150 + Math.random() * 100}px`,
+              height: `${80 + Math.random() * 60}px`
+            }}
+            variants={holoVariants}
+            animate="animate"
+            transition={{
+              ...holoVariants.animate.transition,
+              delay: Math.random() * 5
+            }}
+          >
+            <div className="text-cyan-300/70 font-mono text-xs">
+              {codeElements[Math.floor(Math.random() * codeElements.length)]}
+            </div>
+            <div className="text-green-400/50 font-mono text-xs mt-1">
+              {Math.random() > 0.5 ? 'SUCCESS' : 'LOADING...'}
+            </div>
+          </motion.div>
+        ))}
+      </div>
 
-        .cyberpunk-grid {
-          background-image: 
-            linear-gradient(rgba(6, 182, 212, 0.6) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(6, 182, 212, 0.6) 1px, transparent 1px),
-            linear-gradient(rgba(147, 51, 234, 0.4) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(147, 51, 234, 0.4) 1px, transparent 1px),
-            linear-gradient(rgba(245, 158, 11, 0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(245, 158, 11, 0.3) 1px, transparent 1px);
-          background-size: 120px 120px, 120px 120px, 40px 40px, 40px 40px, 8px 8px, 8px 8px;
-          animation: gridCyberpunk 8s ease-in-out infinite;
-        }
+      {/* Neon Circuit Lines */}
+    
 
-        .code-float {
-          animation: codeFloat 8s ease-in-out infinite;
-        }
 
-        .glitch-line {
-          animation: glitchLine 2s ease-in-out infinite;
-        }
 
-        .scanlines {
-          background-image: linear-gradient(transparent 50%, rgba(0, 255, 255, 0.1) 50%);
-          background-size: 100% 4px;
-          animation: scanlines 0.1s linear infinite;
-        }
+      {/* Cyberpunk Status Bars */}
+      <div className="absolute left-10 top-1/4 space-y-4">
+        {['NEURAL', 'CYBER', 'NET'].map((label, i) => (
+          <motion.div 
+            key={label}
+            className="bg-black/50 border border-cyan-400/50 p-2 rounded"
+            variants={neonPulse}
+            animate="animate"
+            transition={{
+              ...neonPulse.animate.transition,
+              delay: i * 0.5
+            }}
+          >
+            <div className="text-cyan-400 font-mono text-xs">{label}</div>
+            <div className="w-20 h-1 bg-gray-700 rounded">
+              <motion.div 
+                className="h-1 bg-gradient-to-r from-cyan-400 to-purple-400 rounded"
+                animate={{
+                  width: [`${Math.random() * 50 + 30}%`, `${Math.random() * 50 + 30}%`],
+                  transition: {
+                    duration: 3,
+                    repeat: Infinity,
+                    repeatType: 'reverse'
+                  }
+                }}
+              />
+            </div>
+          </motion.div>
+        ))}
+      </div>
 
-        .delay-2000 {
-          animation-delay: 2s;
-        }
 
-        .delay-4000 {
-          animation-delay: 4s;
-        }
 
-        .delay-6000 {
-          animation-delay: 6s;
-        }
-
-        @keyframes matrixRain {
-          0% { transform: translateY(-100vh); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(100vh); opacity: 0; }
-        }
-
-        @keyframes gridCyberpunk {
-          0%, 100% { 
-            transform: translate(0, 0) scale(1);
-            opacity: 0.15;
+      {/* Scanlines with Glow */}
+      <motion.div 
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: 'linear-gradient(transparent 49%, rgba(0, 255, 255, 0.3) 50%, transparent 51%)',
+          backgroundSize: '100% 3px'
+        }}
+        animate={{
+          y: ['0%', '100%'],
+          transition: {
+            duration: 0.2,
+            repeat: Infinity,
+            ease: 'linear'
           }
-          25% { 
-            transform: translate(30px, 15px) scale(1.02);
-            opacity: 0.25;
-          }
-          50% { 
-            transform: translate(15px, 30px) scale(0.98);
-            opacity: 0.20;
-          }
-          75% { 
-            transform: translate(-15px, 10px) scale(1.01);
-            opacity: 0.18;
-          }
-        }
-
-        @keyframes codeFloat {
-          0%, 100% { 
-            transform: translateY(0px) translateX(0px) rotate(0deg); 
-            opacity: 0.08;
-          }
-          25% { 
-            transform: translateY(-20px) translateX(10px) rotate(90deg); 
-            opacity: 0.15;
-          }
-          50% { 
-            transform: translateY(-40px) translateX(-5px) rotate(180deg); 
-            opacity: 0.12;
-          }
-          75% { 
-            transform: translateY(-30px) translateX(15px) rotate(270deg); 
-            opacity: 0.10;
-          }
-        }
-
-        @keyframes glitchLine {
-          0%, 100% { 
-            opacity: 0; 
-            transform: translateX(-100%);
-          }
-          50% { 
-            opacity: 0.3; 
-            transform: translateX(100%);
-          }
-        }
-
-        @keyframes scanlines {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(100%); }
-        }
-      `}</style>
-    </>
+        }}
+      />
+    </div>
   );
 };
 

@@ -5,24 +5,11 @@ import {
     Users,
     Server,
     ArrowRight,
-    Play,
-    CheckCircle,
-    Menu,
-    X,
     Globe,
-    Lock,
-    TrendingUp,
     Gamepad2,
-    Target,
-    Bolt,
-    Store,
-    Wallet,
-    Crown,
     Sparkles,
     Clock,
     Gift,
-    DollarSign,
-    Eye,
     ShieldCheck,
     Code,
     Terminal,
@@ -60,7 +47,7 @@ const IndexPage = () => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("mousemove", handleMouseMove);
         };
-    }, [scrollY]);
+    }, []);
 
     const features = [
         {
@@ -145,24 +132,11 @@ const IndexPage = () => {
     ];
 
     return (
-        <div className="min-h-screen text-white overflow-x-hidden relative">
+        <div className="min-h-screen bg-transparent text-white overflow-x-hidden relative">
             {/* Advanced Animated Background */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
                 {/* Cyberpunk Grid */}
-                <div
-                    className="absolute inset-0 opacity-20"
-                    style={{
-                        backgroundImage: `
-            linear-gradient(rgba(6, 182, 212, 0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(6, 182, 212, 0.3) 1px, transparent 1px),
-            linear-gradient(rgba(147, 51, 234, 0.2) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(147, 51, 234, 0.2) 1px, transparent 1px)
-          `,
-                        backgroundSize:
-                            "100px 100px, 100px 100px, 20px 20px, 20px 20px",
-                        animation: "gridCyber 20s linear infinite",
-                    }}
-                ></div>
+                <div className="absolute inset-0 opacity-20"></div>
 
                 {/* Floating Geometric Shapes */}
                 <div className="absolute inset-0">
@@ -222,19 +196,15 @@ const IndexPage = () => {
                 ></div>
             </div>
 
-            {/* Futuristic Navigation */}
-
             {/* Hero Section - Cyberpunk Style */}
             <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 bg-transparent"></div>
+
                 <div className="relative max-w-7xl mx-auto px-8 text-center">
                     {/* System Status Banner */}
                     <div className="inline-flex items-center gap-4 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 border border-cyan-400/30 rounded-full px-8 py-4 mb-12 backdrop-blur-sm relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 to-purple-400/10 animate-pulse"></div>
-                        <Sparkles
-                            className="w-6 h-6 text-yellow-400 animate-spin"
-                            style={{ animationDuration: "3s" }}
-                        />
+                        <Sparkles className="w-6 h-6 text-yellow-400 animate-pulse duration-1000" />
                         <span className="text-lg font-mono text-cyan-300 font-bold">
                             [SYSTEM_STATUS]:
                         </span>
@@ -315,20 +285,18 @@ const IndexPage = () => {
                     </div>
 
                     <div className="flex justify-center gap-8 mb-20">
-                        <button className="group relative bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 hover:from-cyan-500 px-12 py-6 rounded-2xl text-2xl font-mono font-bold transition-all duration-500 transform flex items-center cursor-pointer justify-center gap-4 shadow-2xl shadow-cyan-500/30 overflow-hidden">
+                        <button className="group relative bg-gradient-to-r from-cyan-600 via-blue-600 cursor-pointer to-purple-600 hover:from-cyan-500 hover:via-blue-500 hover:to-purple-500 px-12 py-6 rounded-2xl text-2xl font-mono font-bold transition-all duration-500 transform flex items-center justify-center gap-4 shadow-2xl shadow-cyan-500/30 overflow-hidden">
                             <Terminal className="w-8 h-8" />
                             <span className="relative">[INITIALIZE_STORE]</span>
-                            <ArrowRight className="w-6 h-6 transition-transform duration-300" />
-                            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 transition-opacity duration-500 blur"></div>
-                            <div className="absolute inset-0 border border-cyan-400/50 rounded-2xl opacity-0 transition-opacity duration-300"></div>
+                            <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
                         </button>
 
-                        <button className="group relative bg-gray-800/80 hover:bg-gray-700/80 border-2 border-gray-600 hover:border-purple-400 px-12 py-6 rounded-2xl text-2xl font-mono font-bold transition-all duration-500 flex items-center justify-center gap-4 backdrop-blur-sm cursor-pointer overflow-hidden">
-                            <Gamepad2 className="w-8 h-8 transition-colors" />
-                            <span className="transition-colors">
+                        <button className="group relative bg-gray-800/80 hover:bg-gray-700/80 cursor-pointer border-2 border-gray-600 hover:border-purple-400 px-12 py-6 rounded-2xl text-2xl font-mono font-bold transition-all duration-500 flex items-center justify-center gap-4 backdrop-blur-sm overflow-hidden">
+                            <Gamepad2 className="w-8 h-8 group-hover:text-purple-400 transition-colors" />
+                            <span className="group-hover:text-purple-400 transition-colors">
                                 [BROWSE_MATRIX]
                             </span>
-                            <div className="absolute inset-0 bg-purple-400/10 opacity-0 transition-opacity duration-300"></div>
+                            <div className="absolute inset-0 bg-purple-400/10 duration-300"></div>
                         </button>
                     </div>
 

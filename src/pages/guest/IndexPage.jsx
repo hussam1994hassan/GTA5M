@@ -225,8 +225,8 @@ const IndexPage = () => {
                   </span>
                 </span>
                 <span className="block mt-4 relative">
-                  <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-amber-400 bg-clip-text text-transparent neon-text">SECURE</span>
-                  <span className="bg-gradient-to-r from-emerald-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent neon-text ml-4">VAULT</span>
+                  <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-amber-400 bg-clip-text text-transparent neon-text">SECURE VAULT</span>
+                  <span className="bg-gradient-to-r from-emerald-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent neon-text ml-4"></span>
                   <span className="absolute inset-0 text-yellow-400/30 animate-pulse" style={{transform: 'translate(-1px, 1px)', animationDelay: '0.4s'}}>SECURE VAULT</span>
                 </span>
               </h1>
@@ -507,11 +507,11 @@ const IndexPage = () => {
             
             <div className="relative mb-8">
               <h2 className="text-7xl font-black font-mono leading-tight text-white relative">
-                [SECURE_
+                
                 <span className="block bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent neon-text">
-                  YOUR_VAULT
+                  [SECURE_YOUR_VAULT]
                 </span>
-                ]
+                
                 {/* Multi-layer glitch effect */}
                 <span className="absolute inset-0 text-emerald-400/40 font-mono opacity-0 hover:opacity-100 transition-opacity duration-300" style={{transform: 'translate(3px, -2px)'}}>
                   [SECURE_YOUR_VAULT]

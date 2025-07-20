@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, Outlet } from "react-router";
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
+import Background from "../layouts/Background";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import PagesURL from "../constants/PagesURL";
@@ -19,14 +20,22 @@ const GuestLayout = () => {
     }
 
     return (
-        <>
-            <Toaster position="top-center" reverseOrder={false} />
-            <HeaderComponent />
-            <div className="bg-gray-800 h-auto min-h-[calc(100vh-190px)] flex items-center justify-center p-10 box-border">
-                <Outlet />
-            </div>
-            <FooterComponent />
-        </>
+    <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden relative">
+      <Toaster position="top-center" reverseOrder={false} />
+      {/* Background Layer - Fixed position with all effects */}
+      <Background />
+      
+      {/* Header Layer - Fixed navigation */}
+      <HeaderComponent />
+      
+      {/* Main Content Layer */}
+      <main className="relative z-20">
+        <Outlet />
+      </main>
+      
+      {/* Footer Layer */}
+      <FooterComponent />
+    </div>
     );
 };
 

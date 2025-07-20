@@ -85,7 +85,6 @@ const Background = () => {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-gradient-to-b from-gray-900 via-purple-900/20 to-black">
       
-      {/* Animated City Skyline - GTA Style */}
 
 
       {/* Slow Matrix Digital Rain */}
@@ -162,9 +161,41 @@ const Background = () => {
       </div>
 
       {/* Neon Circuit Lines */}
-    
+      <div className="absolute inset-0">
+        <svg className="w-full h-full opacity-20">
+          <defs>
+            <linearGradient id="circuit1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style={{stopColor: '#00ffff', stopOpacity: 0.8}} />
+              <stop offset="50%" style={{stopColor: '#ff00ff', stopOpacity: 0.6}} />
+              <stop offset="100%" style={{stopColor: '#ffff00', stopOpacity: 0.4}} />
+            </linearGradient>
+          </defs>
+          {[...Array(20)].map((_, i) => (
+            <motion.path 
+              key={i}
+              d={`M${Math.random() * 100} ${Math.random() * 100} 
+                  Q${Math.random() * 100} ${Math.random() * 100} 
+                  ${Math.random() * 100} ${Math.random() * 100}`}
+              stroke="url(#circuit1)" 
+              strokeWidth="2"
+              fill="none"
+              animate={{
+                strokeDashoffset: [0, -100],
+                transition: {
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: 'linear'
+                }
+              }}
+              style={{
+                strokeDasharray: '10 5'
+              }}
+            />
+          ))}
+        </svg>
+      </div>
 
-
+      
 
       {/* Cyberpunk Status Bars */}
       <div className="absolute left-10 top-1/4 space-y-4">
@@ -197,7 +228,84 @@ const Background = () => {
         ))}
       </div>
 
+      {/* Floating Data Streams */}
+      <div className="absolute inset-0">
+        {[...Array(15)].map((_, i) => (
+          <motion.div 
+            key={`data-${i}`}
+            className="absolute font-mono text-xs opacity-40"
+            style={{
+              left: `${Math.random() * 90}%`,
+              top: `${Math.random() * 90}%`,
+              color: ['#00ffff', '#ff00ff', '#ffff00', '#00ff00'][i % 4]
+            }}
+            variants={dataStream}
+            animate="animate"
+            transition={{
+              ...dataStream.animate.transition,
+              delay: Math.random() * 4
+            }}
+          >
+            {[...codeElements, ...gtaElements, ...cyberpunkElements][Math.floor(Math.random() * 46)]}
+          </motion.div>
+        ))}
+      </div>
 
+      {/* Advanced Grid with Glow */}
+      <motion.div 
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(0, 255, 255, 0.8) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 255, 255, 0.8) 1px, transparent 1px),
+            linear-gradient(rgba(255, 0, 255, 0.6) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 0, 255, 0.6) 1px, transparent 1px)
+          `,
+          backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px'
+        }}
+        animate={{
+          backgroundPosition: ['0 0', '100px 100px'],
+          transition: {
+            duration: 10,
+            repeat: Infinity,
+            ease: 'linear'
+          }
+        }}
+      />
+
+      {/* Neon Orbs Enhanced */}
+      <motion.div 
+        className="absolute top-1/6 left-1/12 w-80 h-80 rounded-full blur-2xl"
+        style={{
+          background: 'radial-gradient(circle, rgba(0,255,255,0.3) 0%, rgba(0,255,255,0.1) 50%, transparent 100%)'
+        }}
+        animate={{
+          scale: [1, 1.3, 1],
+          opacity: [0.3, 0.7, 0.3],
+          transition: {
+            duration: 4,
+            repeat: Infinity,
+            ease: 'easeInOut'
+          }
+        }}
+      />
+      
+      <motion.div 
+        className="absolute bottom-1/4 right-1/8 w-60 h-60 rounded-full blur-2xl"
+        style={{
+          background: 'radial-gradient(circle, rgba(255,0,255,0.4) 0%, rgba(255,0,255,0.1) 50%, transparent 100%)'
+        }}
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.4, 0.8, 0.4],
+          transition: {
+            duration: 3,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: 1
+          }
+        }}
+      />
 
       {/* Scanlines with Glow */}
       <motion.div 

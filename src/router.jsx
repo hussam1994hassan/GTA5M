@@ -13,6 +13,7 @@ import DocsPage from "./pages/auth/DocsPage";
 import ErrorPage from "./pages/ErrorPage";
 import AdminLayout from "./layouts/AdminLayout";
 import ADashboardPage from "./pages/admin/ADashboardPage";
+import LoginPage from "./pages/guest/LoginPage";
 
 const router = createBrowserRouter([
     {
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
             },
             {
                 path: PagesURL.LOGIN.URL,
-                element: <RegisterPage />,
+                element: <LoginPage />,
             },
             {
                 path: PagesURL.REGISTER.URL,

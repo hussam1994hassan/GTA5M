@@ -15,6 +15,9 @@ import {
     Database,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import PagesURL from "../../constants/PagesURL";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/reducers/authSlice";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -25,6 +28,8 @@ const LoginPage = () => {
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+
+    const dispatch = useDispatch();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -70,12 +75,14 @@ const LoginPage = () => {
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
         // Here you would typically make an API call
-        // console.log("Logging in...", formData);
+        console.log("Logging in...", formData);
 
         setIsLoading(false);
 
         // Show success notification
         toast.success("Login successful!");
+
+        dispatch(login());
     };
 
     const handleKeyPress = (e) => {
@@ -276,9 +283,7 @@ const LoginPage = () => {
                         <div className="bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-xl border-x border-b border-cyan-500/30 rounded-b-2xl p-8 shadow-2xl">
                             {/* Form Tabs */}
                             <div className="flex mb-8 bg-gray-800/50 rounded-xl p-1">
-                                <button
-                                    className="flex-1 py-3 px-4 rounded-lg font-mono font-semibold transition-all duration-300 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg"
-                                >
+                                <button className="flex-1 py-3 px-4 rounded-lg font-mono font-semibold transition-all duration-300 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg">
                                     [LOGIN]
                                 </button>
                                 <button
@@ -405,7 +410,9 @@ const LoginPage = () => {
                                             Don't have vault access?{" "}
                                             <button
                                                 type="button"
-                                                onClick={() => navigate("/register")}
+                                                onClick={() =>
+                                                    navigate("/register")
+                                                }
                                                 className="text-emerald-400 hover:text-cyan-400 font-bold transition-colors"
                                             >
                                                 [CREATE_VAULT]

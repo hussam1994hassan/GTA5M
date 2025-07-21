@@ -16,6 +16,7 @@ import {
     Database,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import PagesURL from "../../constants/PagesURL";
 
 const RegisterPage = () => {
     const navigate = useNavigate();
@@ -89,7 +90,7 @@ const RegisterPage = () => {
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
         // Here you would typically make an API call
-        // console.log("Registering...", formData);
+        console.log("Registering...", formData);
 
         setIsLoading(false);
 
@@ -301,9 +302,7 @@ const RegisterPage = () => {
                                 >
                                     [LOGIN]
                                 </button>
-                                <button
-                                    className="flex-1 py-3 px-4 rounded-lg font-mono font-semibold transition-all duration-300 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg"
-                                >
+                                <button className="flex-1 py-3 px-4 rounded-lg font-mono font-semibold transition-all duration-300 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg">
                                     [REGISTER]
                                 </button>
                             </div>
@@ -539,7 +538,9 @@ const RegisterPage = () => {
                                             Already have an account?{" "}
                                             <button
                                                 type="button"
-                                                onClick={() => navigate("/login")}
+                                                onClick={() =>
+                                                    navigate("/login")
+                                                }
                                                 className="text-emerald-400 hover:text-cyan-400 font-bold transition-colors"
                                             >
                                                 [LOGIN]

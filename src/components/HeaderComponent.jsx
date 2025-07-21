@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Shield, Lock, Menu, X } from "lucide-react";
-import { useNavigate } from "react-router";
-import PagesURL from "../constants/PagesURL";
+import { ShoppingCart, Server, Gamepad2, Menu, X, TrendingUp, Users, Shield } from "lucide-react";
+import { motion } from "framer-motion";
 
 const HeaderComponent = () => {
     const [scrollY, setScrollY] = useState(0);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => setScrollY(window.scrollY);
@@ -14,146 +12,88 @@ const HeaderComponent = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const navClass =
-        scrollY > 50
-            ? "bg-gray-900 transition-all duration-0"
-            : "bg-transparent";
+    const navClass = scrollY > 50 ? "bg-gray-900/95 backdrop-blur-xl border-b border-gray-800/50" : "bg-transparent";
+
+    // Custom Wolf SVG Logo with Cyberpunk Colors
+    const WolfLogo = ({ className }) => (
+        <svg viewBox="0 0 100 100" className={className}>
+            <defs>
+                <linearGradient id="wolfGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#10b981" />
+                    <stop offset="50%" stopColor="#06b6d4" />
+                    <stop offset="100%" stopColor="#3b82f6" />
+                </linearGradient>
+            </defs>
+            {/* Wolf Head Shape */}
+            <path 
+                d="M50 15 L35 25 L30 40 L35 55 L45 65 L50 70 L55 65 L65 55 L70 40 L65 25 Z" 
+                fill="url(#wolfGrad)" 
+                opacity="0.9"
+            />
+            {/* Wolf Ears */}
+            <path d="M35 25 L30 15 L40 20 Z" fill="url(#wolfGrad)" opacity="0.8" />
+            <path d="M65 25 L70 15 L60 20 Z" fill="url(#wolfGrad)" opacity="0.8" />
+            {/* Eyes */}
+            <circle cx="42" cy="35" r="3" fill="#10b981" className="animate-pulse" />
+            <circle cx="58" cy="35" r="3" fill="#10b981" className="animate-pulse" />
+            {/* Circuit Lines */}
+            <path d="M35 45 L45 45 L50 50 L55 45 L65 45" stroke="#06b6d4" strokeWidth="1" opacity="0.8" />
+            <path d="M40 55 L50 55 L60 55" stroke="#3b82f6" strokeWidth="1" opacity="0.6" />
+            {/* Binary Code Elements */}
+            <text x="38" y="48" fill="#10b981" fontSize="4" fontFamily="monospace" opacity="0.7">01</text>
+            <text x="58" y="48" fill="#06b6d4" fontSize="4" fontFamily="monospace" opacity="0.7">10</text>
+        </svg>
+    );
 
     return (
-        <nav
-            className={`fixed top-0 w-full z-50 transition-all duration-500 ${navClass}`}
-        >
-            <div className="max-w-7xl mx-auto px-8">
+        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${navClass}`}>
+            <div className="max-w-7xl mx-auto px-6">
                 <div className="flex justify-between items-center h-20">
-                    {/* Revolutionary Professional Logo */}
-                    <div className="flex items-center space-x-6 group cursor-pointer">
+                    {/* Enhanced Logo */}
+                    <motion.div 
+                        className="flex items-center space-x-4 group cursor-pointer"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
+                    >
                         <div className="relative">
-                            <div className="w-14 h-14 relative">
-                                {/* Outer Security Ring */}
-                                <div
-                                    className="absolute inset-0 rounded-full border-4 border-emerald-400 animate-spin opacity-60"
-                                    style={{ animationDuration: "8s" }}
-                                ></div>
-                                <div
-                                    className="absolute inset-1 rounded-full border-2 border-cyan-400 animate-spin opacity-40"
-                                    style={{
-                                        animationDuration: "6s",
-                                        animationDirection: "reverse",
-                                    }}
-                                ></div>
-
-                                {/* Central Vault Icon */}
-                                <div className="absolute inset-2 bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-2xl shadow-emerald-500/40 border border-emerald-400/30">
-                                    <Shield className="w-6 h-6 text-emerald-400 relative z-10" />
-                                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
+                            {/* Main Logo Container */}
+                            <div className="w-12 h-12 relative">
+                                {/* Circuit Ring */}
+                                <div className="absolute inset-0 rounded-full border border-emerald-400/50 group-hover:border-emerald-400/80 transition-colors duration-300">
+                                    <div className="absolute top-0 left-1/2 w-1 h-1 bg-emerald-400 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+                                    <div className="absolute right-0 top-1/2 w-1 h-1 bg-cyan-400 rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
+                                    <div className="absolute bottom-0 left-1/2 w-1 h-1 bg-blue-400 rounded-full transform -translate-x-1/2 translate-y-1/2"></div>
+                                    <div className="absolute left-0 top-1/2 w-1 h-1 bg-yellow-400 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
                                 </div>
-
-                                {/* Security Indicators */}
-                                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-pulse flex items-center justify-center">
-                                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                                
+                                {/* Wolf Logo */}
+                                <WolfLogo className="absolute inset-1 w-10 h-10" />
+                                
+                                {/* Server Indicator */}
+                                <div className="absolute -top-1 -right-1 w-3 h-3">
+                                    <Server className="w-3 h-3 text-emerald-400" />
                                 </div>
-                                <div
-                                    className="absolute -bottom-1 -left-1 w-3 h-3 bg-blue-400 rounded-full animate-pulse"
-                                    style={{ animationDelay: "0.5s" }}
-                                ></div>
-                                <div
-                                    className="absolute -top-1 -left-1 w-3 h-3 bg-purple-400 rounded-full animate-pulse"
-                                    style={{ animationDelay: "1s" }}
-                                ></div>
-
-                                {/* Holographic Aura */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 via-cyan-500/20 to-blue-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-150 animate-pulse"></div>
                             </div>
                         </div>
 
-                        <div className="flex flex-col relative">
-                            {/* Enhanced Mission Statement */}
-                            <div className="flex items-center gap-2 mt-2">
-                                {/* <Lock className="w-4 h-4 text-emerald-400" /> */}
-                                <span className="text-emerald-400 font-mono tracking-wider font-bold text-3xl">
-                                    GTA5M
+                        <div className="flex flex-col">
+                            <div className="flex items-center space-x-2">
+                                <span className="text-2xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent font-mono">
+                                    FiveMarket
                                 </span>
-                                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                                <div className="flex space-x-1">
+                                    <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                                    <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                                    <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                                </div>
                             </div>
-
-                            {/* Advanced Status Indicators */}
-                            {/* <div className="flex items-center gap-3 mt-2">
-                                <div className="flex items-center gap-1">
-                                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                                    <span className="text-xs text-green-400 font-mono font-bold">
-                                        [SECURE]
-                                    </span>
-                                </div>
-                                <span className="text-xs text-gray-500 font-mono">
-                                    |
-                                </span>
-                                <div className="flex items-center gap-1">
-                                    <div
-                                        className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"
-                                        style={{ animationDelay: "0.3s" }}
-                                    ></div>
-                                    <span className="text-xs text-blue-400 font-mono font-bold">
-                                        [INSTANT]
-                                    </span>
-                                </div>
-                                <span className="text-xs text-gray-500 font-mono">
-                                    |
-                                </span>
-                                <div className="flex items-center gap-1">
-                                    <div
-                                        className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"
-                                        style={{ animationDelay: "0.6s" }}
-                                    ></div>
-                                    <span className="text-xs text-yellow-400 font-mono font-bold">
-                                        [ZERO_FEES]
-                                    </span>
-                                </div>
-                            </div> */}
-
-                            {/* Version & Protocol
-                            <div className="mt-1 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
-                                <span className="text-xs text-cyan-400 font-mono tracking-wider">
-                                    FIVEM_VAULT_PROTOCOL_v4.0.1
-                                </span>
-                                <span className="text-xs text-gray-500 font-mono ml-2">
-                                    // ENTERPRISE_GRADE
-                                </span>
-                            </div> */}
+                            <span className="text-xs text-gray-400 font-mono">
+                                // Server.Marketplace.Protocol_v4.0
+                            </span>
                         </div>
+                    </motion.div>
 
-                        {/* Floating Particles Around Logo */}
-                        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                            {[...Array(8)].map((_, i) => (
-                                <div
-                                    key={i}
-                                    className={`absolute w-1 h-1 rounded-full particle-orbit ${
-                                        i % 4 === 0
-                                            ? "bg-emerald-400"
-                                            : i % 4 === 1
-                                            ? "bg-cyan-400"
-                                            : i % 4 === 2
-                                            ? "bg-blue-400"
-                                            : "bg-yellow-400"
-                                    }`}
-                                    style={{
-                                        left: `${
-                                            20 +
-                                            Math.cos((i * 45 * Math.PI) / 180) *
-                                                60
-                                        }px`,
-                                        top: `${
-                                            20 +
-                                            Math.sin((i * 45 * Math.PI) / 180) *
-                                                60
-                                        }px`,
-                                        animationDelay: `${i * 0.2}s`,
-                                    }}
-                                />
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Gaming Menu */}
+                    {/* Cyberpunk Programming Menu */}
                     <div className="flex items-center space-x-10">
                         <div className="hidden lg:flex items-center space-x-8">
                             <a
@@ -186,35 +126,28 @@ const HeaderComponent = () => {
                             </a>
                         </div>
 
-                        {/* Gaming Action Buttons */}
+                        {/* Cyberpunk Action Buttons */}
                         <div className="hidden lg:flex items-center space-x-4">
-                            <button
-                                onClick={() => navigate(PagesURL.LOGIN.URL)}
-                                className="text-gray-300 hover:text-white transition-all duration-300 font-mono font-medium px-6 py-3 rounded-lg hover:bg-gray-800/50 border border-gray-700/50 hover:border-gray-600"
-                            >
+                            <button className="text-gray-300 hover:text-white transition-all duration-300 font-mono font-medium px-6 py-3 rounded-lg hover:bg-gray-800/50 border border-gray-700/50 hover:border-gray-600">
                                 ./login
                             </button>
-                            <button
-                                onClick={() => navigate(PagesURL.REGISTER.URL)}
+                            
+                            <motion.button
                                 className="relative group bg-gradient-to-r from-emerald-600 via-cyan-600 to-blue-600 hover:from-emerald-500 hover:via-cyan-500 hover:to-blue-500 px-8 py-3 rounded-xl font-mono font-bold transition-all duration-300 transform hover:scale-105 shadow-lg shadow-emerald-500/25"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                             >
-                                <span className="relative z-10">
-                                    [DEPLOY_STORE]
-                                </span>
+                                <span className="relative z-10">[DEPLOY_STORE]</span>
                                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
-                            </button>
+                            </motion.button>
                         </div>
 
-                        {/* Mobile Menu Button */}
+                        {/* Mobile Menu Toggle */}
                         <button
-                            className="lg:hidden p-2 rounded-xl hover:bg-gray-800/50 transition-colors duration-300"
+                            className="lg:hidden p-2 rounded-lg hover:bg-gray-800/50 transition-colors duration-300"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                         >
-                            {isMenuOpen ? (
-                                <X className="w-6 h-6" />
-                            ) : (
-                                <Menu className="w-6 h-6" />
-                            )}
+                            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                         </button>
                     </div>
                 </div>
@@ -222,7 +155,13 @@ const HeaderComponent = () => {
 
             {/* Enhanced Mobile Menu */}
             {isMenuOpen && (
-                <div className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-gray-800">
+                <motion.div 
+                    className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-gray-800"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                >
                     <div className="max-w-7xl mx-auto px-8 py-6 space-y-4">
                         <a
                             href="#vault"
@@ -250,21 +189,16 @@ const HeaderComponent = () => {
                         </a>
 
                         <div className="pt-4 border-t border-gray-800 space-y-3">
-                            <button
-                                onClick={() => navigate(PagesURL.LOGIN.URL)}
-                                className="w-full text-left text-gray-300 hover:text-white transition-colors py-2 text-lg font-mono"
-                            >
+                            <button className="w-full text-left text-gray-300 hover:text-white transition-colors py-2 text-lg font-mono">
                                 ./login
                             </button>
-                            <button
-                                onClick={() => navigate(PagesURL.REGISTER.URL)}
-                                className="w-full bg-gradient-to-r from-emerald-600 to-cyan-600 px-6 py-4 rounded-xl font-mono font-bold transition-all duration-300 text-lg"
-                            >
+                            
+                            <button className="w-full bg-gradient-to-r from-emerald-600 to-cyan-600 px-6 py-4 rounded-xl font-mono font-bold transition-all duration-300 text-lg">
                                 [DEPLOY_STORE]
                             </button>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             )}
         </nav>
     );

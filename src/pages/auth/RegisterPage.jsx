@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
     Shield,
     Lock,
@@ -18,9 +18,7 @@ import {
 import toast from "react-hot-toast";
 
 const RegisterPage = () => {
-    const location = useLocation();
     const navigate = useNavigate();
-    const isLogin = !location.pathname.includes("register");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [formData, setFormData] = useState({
@@ -52,7 +50,7 @@ const RegisterPage = () => {
     const validateForm = () => {
         const newErrors = {};
 
-        if (!isLogin && !formData.name.trim()) {
+        if (!formData.name.trim()) {
             newErrors.name = "Name is required";
         }
 
@@ -68,17 +66,14 @@ const RegisterPage = () => {
             newErrors.password = "Password must be at least 8 characters";
         }
 
-        if (!isLogin) {
-            if (!formData.confirmPassword) {
-                newErrors.confirmPassword = "Please confirm your password";
-            } else if (formData.password !== formData.confirmPassword) {
-                newErrors.confirmPassword = "Passwords do not match";
-            }
+        if (!formData.confirmPassword) {
+            newErrors.confirmPassword = "Please confirm your password";
+        } else if (formData.password !== formData.confirmPassword) {
+            newErrors.confirmPassword = "Passwords do not match";
+        }
 
-            if (!formData.acceptTerms) {
-                newErrors.acceptTerms =
-                    "You must accept the terms and conditions";
-            }
+        if (!formData.acceptTerms) {
+            newErrors.acceptTerms = "You must accept the terms and conditions";
         }
 
         setErrors(newErrors);
@@ -94,32 +89,12 @@ const RegisterPage = () => {
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
         // Here you would typically make an API call
-        // console.log(isLogin ? "Logging in..." : "Registering...", formData);
+        // console.log("Registering...", formData);
 
         setIsLoading(false);
 
-        // Show success notification (you would use react-hot-toast here)
-        toast.success(
-            isLogin ? "Login successful!" : "Registration successful!"
-        );
-    };
-
-    const toggleMode = () => {
-        if (isLogin) {
-            // لو هو في login وروحنا لـ register
-            navigate("/register", { replace: true });
-        } else {
-            // لو هو في register وروحنا لـ login
-            navigate("/login", { replace: true });
-        }
-        setFormData({
-            name: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-            acceptTerms: false,
-        });
-        setErrors({});
+        // Show success notification
+        toast.success("Registration successful!");
     };
 
     const handleKeyPress = (e) => {
@@ -227,9 +202,7 @@ const RegisterPage = () => {
                         {/* Features */}
                         <div className="space-y-6">
                             <h2 className="text-3xl font-bold text-white mb-8">
-                                {isLogin
-                                    ? "Welcome Back, Agent"
-                                    : "Join the Vault Network"}
+                                Join the Vault Network
                             </h2>
 
                             <div className="space-y-4">
@@ -309,16 +282,11 @@ const RegisterPage = () => {
                                 <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                 <span className="text-gray-400 font-mono ml-4 text-sm">
-                                    {isLogin
-                                        ? "vault_login.exe"
-                                        : "vault_register.exe"}
+                                    vault_register.exe
                                 </span>
                             </div>
                             <div className="text-emerald-400 font-mono text-sm">
-                                ${" "}
-                                {isLogin
-                                    ? "authenticate --secure"
-                                    : "register --vault"}
+                                $ register --vault
                                 <span className="animate-pulse">_</span>
                             </div>
                         </div>
@@ -329,21 +297,12 @@ const RegisterPage = () => {
                             <div className="flex mb-8 bg-gray-800/50 rounded-xl p-1">
                                 <button
                                     onClick={() => navigate("/login")}
-                                    className={`flex-1 py-3 px-4 rounded-lg font-mono font-semibold transition-all duration-300 ${
-                                        isLogin
-                                            ? "bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg"
-                                            : "text-gray-400 hover:text-white"
-                                    }`}
+                                    className="flex-1 py-3 px-4 rounded-lg font-mono font-semibold transition-all duration-300 text-gray-400 hover:text-white"
                                 >
                                     [LOGIN]
                                 </button>
                                 <button
-                                    onClick={() => navigate("/register")}
-                                    className={`flex-1 py-3 px-4 rounded-lg font-mono font-semibold transition-all duration-300 ${
-                                        !isLogin
-                                            ? "bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg"
-                                            : "text-gray-400 hover:text-white"
-                                    }`}
+                                    className="flex-1 py-3 px-4 rounded-lg font-mono font-semibold transition-all duration-300 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white shadow-lg"
                                 >
                                     [REGISTER]
                                 </button>
@@ -351,36 +310,34 @@ const RegisterPage = () => {
 
                             {/* Form Fields */}
                             <div className="space-y-6">
-                                {/* Name Field (Register Only) */}
-                                {!isLogin && (
-                                    <div className="space-y-2">
-                                        <label className="block text-gray-300 font-mono font-semibold">
-                                            Agent Name
-                                        </label>
-                                        <div className="relative">
-                                            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                                            <input
-                                                type="text"
-                                                name="name"
-                                                value={formData.name}
-                                                onChange={handleInputChange}
-                                                onKeyPress={handleKeyPress}
-                                                className={`w-full pl-12 pr-4 py-4 bg-gray-800/60 border ${
-                                                    errors.name
-                                                        ? "border-red-500"
-                                                        : "border-gray-600"
-                                                } rounded-xl text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300 font-mono`}
-                                                placeholder="Enter your agent name"
-                                            />
-                                        </div>
-                                        {errors.name && (
-                                            <div className="flex items-center gap-2 text-red-400 text-sm font-mono">
-                                                <AlertCircle className="w-4 h-4" />
-                                                {errors.name}
-                                            </div>
-                                        )}
+                                {/* Name Field */}
+                                <div className="space-y-2">
+                                    <label className="block text-gray-300 font-mono font-semibold">
+                                        Agent Name
+                                    </label>
+                                    <div className="relative">
+                                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleInputChange}
+                                            onKeyPress={handleKeyPress}
+                                            className={`w-full pl-12 pr-4 py-4 bg-gray-800/60 border ${
+                                                errors.name
+                                                    ? "border-red-500"
+                                                    : "border-gray-600"
+                                            } rounded-xl text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300 font-mono`}
+                                            placeholder="Enter your agent name"
+                                        />
                                     </div>
-                                )}
+                                    {errors.name && (
+                                        <div className="flex items-center gap-2 text-red-400 text-sm font-mono">
+                                            <AlertCircle className="w-4 h-4" />
+                                            {errors.name}
+                                        </div>
+                                    )}
+                                </div>
 
                                 {/* Email Field */}
                                 <div className="space-y-2">
@@ -457,104 +414,100 @@ const RegisterPage = () => {
                                     )}
                                 </div>
 
-                                {/* Confirm Password (Register Only) */}
-                                {!isLogin && (
-                                    <div className="space-y-2">
-                                        <label className="block text-gray-300 font-mono font-semibold">
-                                            Confirm Password
-                                        </label>
-                                        <div className="relative">
-                                            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                                            <input
-                                                type={
-                                                    showConfirmPassword
-                                                        ? "text"
-                                                        : "password"
-                                                }
-                                                name="confirmPassword"
-                                                value={formData.confirmPassword}
-                                                onChange={handleInputChange}
-                                                onKeyPress={handleKeyPress}
-                                                className={`w-full pl-12 pr-12 py-4 bg-gray-800/60 border ${
-                                                    errors.confirmPassword
-                                                        ? "border-red-500"
-                                                        : "border-gray-600"
-                                                } rounded-xl text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300 font-mono`}
-                                                placeholder="Confirm your password"
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    setShowConfirmPassword(
-                                                        !showConfirmPassword
-                                                    )
-                                                }
-                                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-emerald-400 transition-colors"
-                                            >
-                                                {showConfirmPassword ? (
-                                                    <EyeOff className="w-5 h-5" />
-                                                ) : (
-                                                    <Eye className="w-5 h-5" />
-                                                )}
-                                            </button>
+                                {/* Confirm Password */}
+                                <div className="space-y-2">
+                                    <label className="block text-gray-300 font-mono font-semibold">
+                                        Confirm Password
+                                    </label>
+                                    <div className="relative">
+                                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                        <input
+                                            type={
+                                                showConfirmPassword
+                                                    ? "text"
+                                                    : "password"
+                                            }
+                                            name="confirmPassword"
+                                            value={formData.confirmPassword}
+                                            onChange={handleInputChange}
+                                            onKeyPress={handleKeyPress}
+                                            className={`w-full pl-12 pr-12 py-4 bg-gray-800/60 border ${
+                                                errors.confirmPassword
+                                                    ? "border-red-500"
+                                                    : "border-gray-600"
+                                            } rounded-xl text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300 font-mono`}
+                                            placeholder="Confirm your password"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setShowConfirmPassword(
+                                                    !showConfirmPassword
+                                                )
+                                            }
+                                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-emerald-400 transition-colors"
+                                        >
+                                            {showConfirmPassword ? (
+                                                <EyeOff className="w-5 h-5" />
+                                            ) : (
+                                                <Eye className="w-5 h-5" />
+                                            )}
+                                        </button>
+                                    </div>
+                                    {errors.confirmPassword && (
+                                        <div className="flex items-center gap-2 text-red-400 text-sm font-mono">
+                                            <AlertCircle className="w-4 h-4" />
+                                            {errors.confirmPassword}
                                         </div>
-                                        {errors.confirmPassword && (
-                                            <div className="flex items-center gap-2 text-red-400 text-sm font-mono">
-                                                <AlertCircle className="w-4 h-4" />
-                                                {errors.confirmPassword}
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
+                                    )}
+                                </div>
 
-                                {/* Terms Checkbox (Register Only) */}
-                                {!isLogin && (
-                                    <div className="space-y-2">
-                                        <label className="flex items-center gap-3 cursor-pointer group">
-                                            <input
-                                                type="checkbox"
-                                                name="acceptTerms"
-                                                checked={formData.acceptTerms}
-                                                onChange={handleInputChange}
-                                                className="w-5 h-5 bg-gray-800 border border-gray-600 rounded text-emerald-400 focus:ring-emerald-400 focus:ring-2"
-                                            />
-                                            <span className="text-gray-300 font-mono text-sm group-hover:text-white transition-colors">
-                                                I accept the
-                                                <a
-                                                    href="/terms"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-emerald-400 hover:text-cyan-400 underline mx-1 transition-colors cursor-pointer"
-                                                    tabIndex={-1}
-                                                    onClick={(e) =>
-                                                        e.stopPropagation()
-                                                    } // عشان الكليك متأثرش على الليبول كـ checkbox
-                                                >
-                                                    Vault Terms
-                                                </a>
-                                                and
-                                                <a
-                                                    href="/privacy"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-emerald-400 hover:text-cyan-400 underline mx-1 transition-colors cursor-pointer"
-                                                    tabIndex={-1}
-                                                    onClick={(e) =>
-                                                        e.stopPropagation()
-                                                    }
-                                                >
-                                                    Security Protocol
-                                                </a>
-                                            </span>
-                                        </label>
-                                        {errors.acceptTerms && (
-                                            <div className="flex items-center gap-2 text-red-400 text-sm font-mono">
-                                                <AlertCircle className="w-4 h-4" />
-                                                {errors.acceptTerms}
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
+                                {/* Terms Checkbox */}
+                                <div className="space-y-2">
+                                    <label className="flex items-center gap-3 cursor-pointer group">
+                                        <input
+                                            type="checkbox"
+                                            name="acceptTerms"
+                                            checked={formData.acceptTerms}
+                                            onChange={handleInputChange}
+                                            className="w-5 h-5 bg-gray-800 border border-gray-600 rounded text-emerald-400 focus:ring-emerald-400 focus:ring-2"
+                                        />
+                                        <span className="text-gray-300 font-mono text-sm group-hover:text-white transition-colors">
+                                            I accept the
+                                            <a
+                                                href="/terms"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-emerald-400 hover:text-cyan-400 underline mx-1 transition-colors cursor-pointer"
+                                                tabIndex={-1}
+                                                onClick={(e) =>
+                                                    e.stopPropagation()
+                                                }
+                                            >
+                                                Vault Terms
+                                            </a>
+                                            and
+                                            <a
+                                                href="/privacy"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-emerald-400 hover:text-cyan-400 underline mx-1 transition-colors cursor-pointer"
+                                                tabIndex={-1}
+                                                onClick={(e) =>
+                                                    e.stopPropagation()
+                                                }
+                                            >
+                                                Security Protocol
+                                            </a>
+                                        </span>
+                                    </label>
+                                    {errors.acceptTerms && (
+                                        <div className="flex items-center gap-2 text-red-400 text-sm font-mono">
+                                            <AlertCircle className="w-4 h-4" />
+                                            {errors.acceptTerms}
+                                        </div>
+                                    )}
+                                </div>
 
                                 {/* Submit Button */}
                                 <button
@@ -566,16 +519,12 @@ const RegisterPage = () => {
                                         {isLoading ? (
                                             <>
                                                 <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                                {isLogin
-                                                    ? "AUTHENTICATING..."
-                                                    : "CREATING_VAULT..."}
+                                                CREATING_VAULT...
                                             </>
                                         ) : (
                                             <>
                                                 <Shield className="w-6 h-6" />
-                                                {isLogin
-                                                    ? "[AUTHENTICATE]"
-                                                    : "[CREATE_VAULT]"}
+                                                [CREATE_VAULT]
                                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                             </>
                                         )}
@@ -585,30 +534,15 @@ const RegisterPage = () => {
 
                                 {/* Additional Options */}
                                 <div className="space-y-4">
-                                    {isLogin && (
-                                        <div className="text-center">
-                                            <button
-                                                type="button"
-                                                className="text-cyan-400 hover:text-emerald-400 font-mono text-sm transition-colors"
-                                            >
-                                                Forgot your vault access?
-                                            </button>
-                                        </div>
-                                    )}
-
                                     <div className="text-center">
                                         <span className="text-gray-400 font-mono text-sm">
-                                            {isLogin
-                                                ? "Don't have vault access? "
-                                                : "Already have an account? "}
+                                            Already have an account?{" "}
                                             <button
                                                 type="button"
-                                                onClick={toggleMode}
+                                                onClick={() => navigate("/login")}
                                                 className="text-emerald-400 hover:text-cyan-400 font-bold transition-colors"
                                             >
-                                                {isLogin
-                                                    ? "[CREATE_VAULT]"
-                                                    : "[LOGIN]"}
+                                                [LOGIN]
                                             </button>
                                         </span>
                                     </div>

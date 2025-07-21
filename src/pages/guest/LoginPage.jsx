@@ -16,10 +16,14 @@ import {
     Database,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import PagesURL from "../../constants/PagesURL";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/reducers/authSlice";
 
 const RegisterPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const isLogin = !location.pathname.includes("register");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -86,7 +90,8 @@ const RegisterPage = () => {
     };
 
     const handleSubmit = async () => {
-        if (!validateForm()) return;
+        // if (!validateForm()) return;
+        // console.log(formData);
 
         setIsLoading(true);
 
@@ -102,6 +107,9 @@ const RegisterPage = () => {
         toast.success(
             isLogin ? "Login successful!" : "Registration successful!"
         );
+
+        dispatch(login());
+        navigate(PagesURL.DASHBOARD.URL);
     };
 
     const toggleMode = () => {
@@ -392,9 +400,9 @@ const RegisterPage = () => {
                                         <input
                                             type="email"
                                             name="email"
-                                            value={formData.email}
+                                            // value={formData.email}
+                                            defaultValue={`admin@git5m.com`}
                                             onChange={handleInputChange}
-                                            onKeyPress={handleKeyPress}
                                             className={`w-full pl-12 pr-4 py-4 bg-gray-800/60 border ${
                                                 errors.email
                                                     ? "border-red-500"
@@ -425,9 +433,9 @@ const RegisterPage = () => {
                                                     : "password"
                                             }
                                             name="password"
-                                            value={formData.password}
+                                            // value={formData.password}
+                                            defaultValue={`Pass@123`}
                                             onChange={handleInputChange}
-                                            onKeyPress={handleKeyPress}
                                             className={`w-full pl-12 pr-12 py-4 bg-gray-800/60 border ${
                                                 errors.password
                                                     ? "border-red-500"

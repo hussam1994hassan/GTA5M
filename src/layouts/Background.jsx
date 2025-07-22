@@ -87,7 +87,7 @@ const Background = () => {
       
       {/* GTA V Background Image */}
       <img 
-        src="https://i.ibb.co/gF4ZcDqk/Jason-and-Lucia-01-With-Logos-landscape.webp" 
+        src="https://i.ibb.co/1YxqNZkc/2152516-1920x1080-desktop-full-hd-gta-v-wallpaper.jpg" 
         alt="GTA V Background" 
         className="absolute inset-0 w-full h-full object-cover opacity-30"
         style={{ mixBlendMode: 'overlay' }}

@@ -85,7 +85,13 @@ const Background = () => {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-gradient-to-b from-gray-900 via-purple-900/20 to-black">
       
-
+      {/* GTA V Background Image */}
+      <img 
+        src="https://i.ibb.co/gF4ZcDqk/Jason-and-Lucia-01-With-Logos-landscape.webp" 
+        alt="GTA V Background" 
+        className="absolute inset-0 w-full h-full object-cover opacity-30"
+        style={{ mixBlendMode: 'overlay' }}
+      />
 
       {/* Slow Matrix Digital Rain */}
       <div className="absolute inset-0">
@@ -173,8 +179,8 @@ const Background = () => {
           {[...Array(20)].map((_, i) => (
             <motion.path 
               key={i}
-              d={`M${Math.random() * 100} ${Math.random() * 100} 
-                  Q${Math.random() * 100} ${Math.random() * 100} 
+              d={`M${Math.random() * 100} ${Math.random() * 100} \
+                  Q${Math.random() * 100} ${Math.random() * 100} \
                   ${Math.random() * 100} ${Math.random() * 100}`}
               stroke="url(#circuit1)" 
               strokeWidth="2"
@@ -255,11 +261,11 @@ const Background = () => {
       <motion.div 
         className="absolute inset-0 opacity-10"
         style={{
-          backgroundImage: `
-            linear-gradient(rgba(0, 255, 255, 0.8) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 255, 255, 0.8) 1px, transparent 1px),
-            linear-gradient(rgba(255, 0, 255, 0.6) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 0, 255, 0.6) 1px, transparent 1px)
+          backgroundImage: `\
+            linear-gradient(rgba(0, 255, 255, 0.8) 1px, transparent 1px),\n\
+            linear-gradient(90deg, rgba(0, 255, 255, 0.8) 1px, transparent 1px),\n\
+            linear-gradient(rgba(255, 0, 255, 0.6) 1px, transparent 1px),\n\
+            linear-gradient(90deg, rgba(255, 0, 255, 0.6) 1px, transparent 1px)\
           `,
           backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px'
         }}
@@ -328,3 +334,4 @@ const Background = () => {
 };
 
 export default Background;
+

@@ -51,7 +51,26 @@ import {
     Shield
 } from "lucide-react";
 
-const OverviewPage = ({ serverData, onEditProduct, onViewOrder }) => {
+const defaultServerData = {
+    name: "",
+    plan: "",
+    status: "",
+    players: 0,
+    maxPlayers: 0,
+    uptime: "",
+    version: "",
+    revenue: { today: 0, week: 0, month: 0, total: 0 },
+    commission: { earned: 0, rate: 0 },
+    orders: { pending: 0, total: 0 },
+    automatedDeliveries: { successRate: 0 },
+    customers: { new: 0, total: 0 }
+};
+
+const OverviewPage = ({
+    serverData = defaultServerData,
+    onEditProduct,
+    onViewOrder
+}) => {
     const [timeRange, setTimeRange] = useState("7d");
     const [selectedMetric, setSelectedMetric] = useState("revenue");
 
@@ -74,18 +93,18 @@ const OverviewPage = ({ serverData, onEditProduct, onViewOrder }) => {
     ];
 
     const recentTransactions = [
-        { id: "TXN001", player: "john_doe", playerAvatar: "JD", item: "Legendary Weapon Pack", amount: 49.99, status: "completed", time: "2 minutes ago", method: "PayPal" },
-        { id: "TXN002", player: "gamer_pro", playerAvatar: "GP", item: "Supercar Bundle", amount: 89.99, status: "completed", time: "8 minutes ago", method: "Stripe" },
-        { id: "TXN003", player: "player123", playerAvatar: "P1", item: "Mystery Crate", amount: 12.99, status: "pending", time: "15 minutes ago", method: "PayPal" },
-        { id: "TXN004", player: "roleplay_king", playerAvatar: "RK", item: "VIP Membership", amount: 29.99, status: "completed", time: "1 hour ago", method: "Stripe" },
-        { id: "TXN005", player: "speedster", playerAvatar: "SS", item: "Vehicle Skin Pack", amount: 19.99, status: "refunded", time: "2 hours ago", method: "PayPal" }
+        { id: "TXN001", player: "john_doe", playerAvatar: "JD", item: "VIP Membership", amount: 49.99, status: "completed", time: "2 minutes ago", method: "PayPal", steamId: "76561198000000001" },
+        { id: "TXN002", player: "gamer_pro", playerAvatar: "GP", item: "Premium Vehicle Package", amount: 89.99, status: "completed", time: "8 minutes ago", method: "Stripe", steamId: "76561198000000002" },
+        { id: "TXN003", player: "player123", playerAvatar: "P1", item: "In-Game Money ($500K)", amount: 12.99, status: "pending", time: "15 minutes ago", method: "PayPal", steamId: "76561198000000003" },
+        { id: "TXN004", player: "roleplay_king", playerAvatar: "RK", item: "Police Rank Promotion", amount: 29.99, status: "completed", time: "1 hour ago", method: "Stripe", steamId: "76561198000000004" },
+        { id: "TXN005", player: "speedster", playerAvatar: "SS", item: "Custom Vehicle Skin", amount: 19.99, status: "refunded", time: "2 hours ago", method: "PayPal", steamId: "76561198000000005" }
     ];
 
     const topProducts = [
-        { id: 1, name: "Legendary Weapon Pack", sales: 234, revenue: 11666.66, trend: "up", growth: 15.3 },
-        { id: 2, name: "Mystery Crate", sales: 892, revenue: 11587.08, trend: "up", growth: 8.7 },
-        { id: 3, name: "Supercar Bundle", sales: 156, revenue: 14038.44, trend: "up", growth: 12.1 },
-        { id: 4, name: "VIP Membership", sales: 67, revenue: 2009.33, trend: "stable", growth: 0.5 }
+        { id: 1, name: "VIP Membership (30 Days)", sales: 234, revenue: 11666.66, trend: "up", growth: 15.3, category: "membership" },
+        { id: 2, name: "In-Game Money ($1M)", sales: 892, revenue: 11587.08, trend: "up", growth: 8.7, category: "money" },
+        { id: 3, name: "Premium Vehicle Bundle", sales: 156, revenue: 14038.44, trend: "up", growth: 12.1, category: "vehicles" },
+        { id: 4, name: "Police Rank Package", sales: 67, revenue: 2009.33, trend: "stable", growth: 0.5, category: "ranks" }
     ];
 
     const notifications = [
@@ -188,16 +207,16 @@ const OverviewPage = ({ serverData, onEditProduct, onViewOrder }) => {
                             <div className="flex items-center gap-4 text-sm">
                                 <span className="text-emerald-400 font-mono flex items-center gap-1">
                                     <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                                    ONLINE
+                                    FiveM SERVER ONLINE
                                 </span>
                                 <span className="text-gray-400 font-mono">
-                                    {serverData.players}/{serverData.maxPlayers} players
+                                    {serverData.players}/{serverData.maxPlayers} players connected
                                 </span>
                                 <span className="text-gray-400 font-mono">
                                     Uptime: {serverData.uptime}
                                 </span>
                                 <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent font-mono font-bold">
-                                    {serverData.plan.toUpperCase()}
+                                    {serverData.plan.toUpperCase()} PLAN
                                 </span>
                             </div>
                         </div>
@@ -209,11 +228,11 @@ const OverviewPage = ({ serverData, onEditProduct, onViewOrder }) => {
                         </button>
                         <button className="bg-gray-700/50 text-gray-400 px-6 py-3 rounded-xl font-mono font-bold hover:bg-gray-600/50 hover:text-white transition-all duration-300">
                             <Copy className="w-5 h-5 inline mr-2" />
-                            COPY_LINK
+                            COPY_STORE_LINK
                         </button>
                         <button className="bg-blue-600/20 border border-blue-400/30 text-blue-400 px-6 py-3 rounded-xl font-mono font-bold hover:bg-blue-500/30 transition-all duration-300">
                             <RefreshCw className="w-5 h-5 inline mr-2" />
-                            RESTART
+                            SYNC_SERVER
                         </button>
                     </div>
                 </div>
@@ -223,21 +242,29 @@ const OverviewPage = ({ serverData, onEditProduct, onViewOrder }) => {
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="grid grid-cols-4 gap-6"
+                className="grid grid-cols-5 gap-6"
             >
                 <StatCard
-                    title="Today's Revenue"
-                    value={`$${serverData.revenue.today.toLocaleString()}`}
-                    subtitle="vs yesterday: +$270.20"
+                    title="Store Revenue"
+                    value={`${serverData.revenue.today.toLocaleString()}`}
+                    subtitle="Today's earnings from players"
                     icon={<DollarSign className="w-8 h-8" />}
                     color="emerald"
                     trend={true}
                     percentage={15.3}
                 />
                 <StatCard
-                    title="Weekly Sales"
-                    value={`$${serverData.revenue.week.toLocaleString()}`}
-                    subtitle="vs last week: +$1,185.80"
+                    title="Commission Fee"
+                    value={`${
+                        serverData?.commission?.earned !== undefined
+                            ? serverData.commission.earned.toLocaleString()
+                            : "0"
+                    }`}
+                    subtitle={`${
+                        serverData?.commission?.rate !== undefined
+                            ? serverData.commission.rate
+                            : "0"
+                    }% platform fee earned`}
                     icon={<TrendingUp className="w-8 h-8" />}
                     color="cyan"
                     trend={true}
@@ -246,18 +273,29 @@ const OverviewPage = ({ serverData, onEditProduct, onViewOrder }) => {
                 <StatCard
                     title="Total Orders"
                     value={serverData.orders.total.toLocaleString()}
-                    subtitle={`${serverData.orders.pending} pending`}
+                    subtitle={`${serverData.orders.pending} pending delivery`}
                     icon={<ShoppingCart className="w-8 h-8" />}
                     color="blue"
                     trend={true}
                     percentage={12.1}
                 />
                 <StatCard
+                    title="Auto Delivery"
+                    value={`${serverData?.automatedDeliveries?.successRate !== undefined
+                        ? serverData.automatedDeliveries.successRate
+                        : 0}%`}
+                    subtitle="Successful automated deliveries"
+                    icon={<Zap className="w-8 h-8" />}
+                    color="yellow"
+                    trend={true}
+                    percentage={2.4}
+                />
+                <StatCard
                     title="Active Players"
                     value={serverData.players}
-                    subtitle={`${serverData.customers.new} new today`}
+                    subtitle={`${serverData.customers.new} new customers today`}
                     icon={<Users className="w-8 h-8" />}
-                    color="yellow"
+                    color="purple"
                     trend={true}
                     percentage={-2.4}
                 />

@@ -1,172 +1,674 @@
-import React, { useState } from "react";
+const renderPlayerIntegration = () => (
+        <div className="space-y-6">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
+            >
+                <h3 className="text-xl font-bold text-blue-400 font-mono mb-6 flex items-center gap-2">
+                    <Users className="w-6 h-6" />
+                    [PLAYER_INTEGRATION]
+                </h3>
+
+                <div className="grid grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Steam API Key
+                        </label>
+                        <input
+                            type="password"
+                            value={storeData.integration.steam_api_key}
+                            onChange={(e) => handleInputChange('integration', 'steam_api_key', e.target.value)}
+                            placeholder="Your Steam Web API Key"
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-blue-400 transition-all duration-300"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Discord Bot Token
+                        </label>
+                        <input
+                            type="password"
+                            value={storeData.integration.discord_bot_token}
+                            onChange={(e) => handleInputChange('integration', 'discord_bot_token', e.target.value)}
+                            placeholder="Discord Bot Token (Optional)"
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-blue-400 transition-all duration-300"
+                        />
+                    </div>
+                </div>
+
+                <div className="mt-6 space-y-4">
+                    <div className="flex items-center gap-3">
+                        <input
+                            type="checkbox"
+                            checked={storeData.integration.require_steam}
+                            onChange={(e) => handleInputChange('integration', 'require_steam', e.target.checked)}
+                            className="w-5 h-5 rounded"
+                        />
+                        <label className="text-gray-300 font-mono font-semibold">
+                            Require Steam Account (Players must link Steam to purchase)
+                        </label>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <input
+                            type="checkbox"
+                            checked={storeData.integration.require_discord}
+                            onChange={(e) => handleInputChange('integration', 'require_discord', e.target.checked)}
+                            className="w-5 h-5 rounded"
+                        />
+                        <label className="text-gray-300 font-mono font-semibold">
+                            Require Discord Account (Players must be in Discord server)
+                        </label>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <input
+                            type="checkbox"
+                            checked={storeData.integration.auto_link_accounts}
+                            onChange={(e) => handleInputChange('integration', 'auto_link_accounts', e.target.checked)}
+                            className="w-5 h-5 rounded"
+                        />
+                        <label className="text-gray-300 font-mono font-semibold">
+                            Auto-link Player Accounts (Automatic Steam ID detection)
+                        </label>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <input
+                            type="checkbox"
+                            checked={storeData.integration.verify_server_membership}
+                            onChange={(e) => handleInputChange('integration', 'verify_server_membership', e.target.checked)}
+                            className="w-5 h-5 rounded"
+                        />
+                        <label className="text-gray-300 font-mono font-semibold">
+                            Verify Server Membership (Only server members can purchase)
+                        </label>
+                    </div>
+                </div>
+            </motion.div>
+        </div>
+    );
+
+    const renderPayoutSettings = () => (
+        <div className="space-y-6">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
+            >
+                <h3 className="text-xl font-bold text-emerald-400 font-mono mb-6 flex items-center gap-2">
+                    <DollarSign className="w-6 h-6" />
+                    [PAYOUT_SETTINGS]
+                </h3>
+
+                <div className="grid grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Payout Method
+                        </label>
+                        <select
+                            value={storeData.payout.method}
+                            onChange={(e) => handleInputChange('payout', 'method', e.target.value)}
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        >
+                            <option value="paypal">PayPal</option>
+                            <option value="bank">Bank Transfer</option>
+                            <option value="crypto">Cryptocurrency</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Payout Schedule
+                        </label>
+                        <select
+                            value={storeData.payout.schedule}
+                            onChange={(e) => handleInputChange('payout', 'schedule', e.target.value)}
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        >
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Minimum Payout Amount
+                        </label>
+                        <div className="flex items-center gap-2">
+                            <span className="text-gray-400">$</span>
+                            <input
+                                type="number"
+                                value={storeData.payout.threshold}
+                                onChange={(e) => handleInputChange('payout', 'threshold', parseInt(e.target.value))}
+                                min="10"
+                                className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            {storeData.payout.method === 'paypal' ? 'PayPal Email' :
+                             storeData.payout.method === 'bank' ? 'Bank Account' : 'Crypto Wallet'}
+                        </label>
+                        <input
+                            type={storeData.payout.method === 'paypal' ? 'email' : 'text'}
+                            value={
+                                storeData.payout.method === 'paypal' ? storeData.payout.account_info.paypal_email :
+                                storeData.payout.method === 'bank' ? storeData.payout.account_info.bank_account :
+                                storeData.payout.account_info.crypto_wallet
+                            }
+                            onChange={(e) => handleInputChange(
+                                'payout.account_info', 
+                                storeData.payout.method === 'paypal' ? 'paypal_email' :
+                                storeData.payout.method === 'bank' ? 'bank_account' : 'crypto_wallet',
+                                e.target.value
+                            )}
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        />
+                    </div>
+                </div>
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 border border-cyan-400/20 p-6 rounded-2xl"
+            >
+                <h3 className="text-cyan-400 font-mono font-bold mb-4 flex items-center gap-2">
+                    <BarChart3 className="w-5 h-5" />
+                    Payout Summary
+                </h3>
+                <div className="grid grid-cols-3 gap-4">
+                    <div className="text-center">
+                        <div className="text-2xl font-black text-emerald-400 font-mono">$1,247.85</div>
+                        <div className="text-gray-400 text-sm">Available Balance</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-2xl font-black text-yellow-400 font-mono">$315.20</div>
+                        <div className="text-gray-400 text-sm">Pending Payout</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-2xl font-black text-cyan-400 font-mono">$5,678.90</div>
+                        <div className="text-gray-400 text-sm">Total Earned</div>
+                    </div>
+                </div>
+            </motion.div>
+        </div>
+    );    const renderServerSettings = () => (
+        <div className="space-y-6">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
+            >
+                <h3 className="text-xl font-bold text-emerald-400 font-mono mb-6 flex items-center gap-2">
+                    <Server className="w-6 h-6" />
+                    [FIVEM_SERVER_CONNECTION]
+                </h3>
+
+                <div className="grid grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Server Name
+                        </label>
+                        <input
+                            type="text"
+                            value={storeData.server.name}
+                            onChange={(e) => handleInputChange('server', 'name', e.target.value)}
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Server IP & Port
+                        </label>
+                        <input
+                            type="text"
+                            value={storeData.server.ip}
+                            onChange={(e) => handleInputChange('server', 'ip', e.target.value)}
+                            placeholder="connect.yourserver.com:30120"
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Connection Type
+                        </label>
+                        <select
+                            value={storeData.server.connection_type}
+                            onChange={(e) => handleInputChange('server', 'connection_type', e.target.value)}
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        >
+                            <option value="rcon">RCON (Recommended)</option>
+                            <option value="api">REST API</option>
+                            <option value="webhook">Webhook</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            {storeData.server.connection_type === 'rcon' ? 'RCON Password' : 
+                             storeData.server.connection_type === 'api' ? 'API Key' : 'Webhook URL'}
+                        </label>
+                        <input
+                            type="password"
+                            value={storeData.server.connection_type === 'rcon' ? storeData.server.rcon_password : storeData.server.api_key}
+                            onChange={(e) => handleInputChange('server', storeData.server.connection_type === 'rcon' ? 'rcon_password' : 'api_key', e.target.value)}
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        />
+                    </div>
+                </div>
+
+                <div className="mt-6 flex items-center gap-6">
+                    <div className="flex items-center gap-3">
+                        <input
+                            type="checkbox"
+                            checked={storeData.server.auto_delivery}
+                            onChange={(e) => handleInputChange('server', 'auto_delivery', e.target.checked)}
+                            className="w-5 h-5 rounded"
+                        />
+                        <label className="text-gray-300 font-mono font-semibold">
+                            Enable Automatic Delivery (Execute commands immediately after payment)
+                        </label>
+                    </div>
+                    
+                    <button 
+                        onClick={() => handleInputChange('server', 'test_connection', true)}
+                        className="bg-blue-600/20 border border-blue-400/30 text-blue-400 px-4 py-2 rounded-lg font-mono font-bold hover:bg-blue-500/30 transition-all duration-300"
+                    >
+                        <Activity className="w-4 h-4 inline mr-2" />
+                        TEST_CONNECTION
+                    </button>
+                </div>
+
+                {storeData.server.test_connection && (
+                    <div className="mt-6 p-4 bg-emerald-500/10 border border-emerald-400/20 rounded-lg">
+                        <div className="flex items-center gap-3">
+                            <CheckCircle className="w-5 h-5 text-emerald-400" />
+                            <div>
+                                <h4 className="text-emerald-400 font-mono font-bold">Connection Successful</h4>
+                                <p className="text-gray-300 text-sm">
+                                    Server connection established successfully. Commands can be executed automatically.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
+            >
+                <h3 className="text-xl font-bold text-cyan-400 font-mono mb-6 flex items-center gap-2">
+                    <Code className="w-6 h-6" />
+                    [COMMAND_EXAMPLES]
+                </h3>
+
+                <div className="grid grid-cols-2 gap-6">
+                    <div>
+                        <h4 className="text-white font-mono font-bold mb-3">VIP Membership Commands</h4>
+                        <div className="bg-gray-800/30 p-4 rounded-lg font-mono text-sm">
+                            <div className="text-emerald-400">add_principal {"{steamid}"} group.vip</div>
+                            <div className="text-gray-400 text-xs mt-1">Adds VIP group to player</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 className="text-white font-mono font-bold mb-3">Money Commands</h4>
+                        <div className="bg-gray-800/30 p-4 rounded-lg font-mono text-sm">
+                            <div className="text-emerald-400">addmoney {"{steamid}"} {"{amount}"}</div>
+                            <div className="text-gray-400 text-xs mt-1">Adds money to player account</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 className="text-white font-mono font-bold mb-3">Vehicle Commands</h4>
+                        <div className="bg-gray-800/30 p-4 rounded-lg font-mono text-sm">
+                            <div className="text-emerald-400">givevehicle {"{steamid}"} {"{vehicle}"}</div>
+                            <div className="text-gray-400 text-xs mt-1">Gives vehicle to player</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 className="text-white font-mono font-bold mb-3">Job/Rank Commands</h4>
+                        <div className="bg-gray-800/30 p-4 rounded-lg font-mono text-sm">
+                            <div className="text-emerald-400">setjob {"{steamid}"} police 3</div>
+                            <div className="text-gray-400 text-xs mt-1">Sets player job and grade</div>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        </div>
+    );
+
+    const renderPaymentSettings = () => (
+        <div className="space-y-6">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
+            >
+                <h3 className="text-xl font-bold text-emerald-400 font-mono mb-6 flex items-center gap-2">
+                    <CreditCard className="w-6 h-6" />
+                    [PAYMENT_METHODS]
+                </h3>
+
+                <div className="space-y-6">
+                    {/* PayPal */}
+                    <div className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-400/20 p-6 rounded-xl">
+                        <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                                    <CreditCard className="w-6 h-6 text-white" />
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-mono font-bold">PayPal</h4>
+                                    <p className="text-gray-400 text-sm">Global payment processing</p>
+                                </div>
+                            </div>
+                            <input
+                                type="checkbox"
+                                checked={storeData.payment_methods.paypal.enabled}
+                                onChange={(e) => handleInputChange('payment_methods.paypal', 'enabled', e.target.checked)}
+                                className="w-5 h-5 rounded"
+                            />
+                        </div>
+                        <div className="text-gray-300 text-sm">
+                            Processing Fee: {storeData.payment_methods.paypal.fees}% + $0.30 per transaction
+                        </div>
+                    </div>
+
+                    {/* Stripe */}
+                    <div className="bg-gradient-to-r from-purple-500/10 to-purple-600/10 border border-purple-400/20 p-6 rounded-xl">
+                        <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
+                                    <CreditCard className="w-6 h-6 text-white" />
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-mono font-bold">Stripe</h4>
+                                    <p className="text-gray-400 text-sm">Credit/Debit cards processing</p>
+                                </div>
+                            </div>
+                            <input
+                                type="checkbox"
+                                checked={storeData.payment_methods.stripe.enabled}
+                                onChange={(e) => handleInputChange('payment_methods.stripe', 'enabled', e.target.checked)}
+                                className="w-5 h-5 rounded"
+                            />
+                        </div>
+                        <div className="text-gray-300 text-sm">
+                            Processing Fee: {storeData.payment_methods.stripe.fees}% + $0.30 per transaction
+                        </div>
+                    </div>
+
+                    {/* Egyptian Payment Methods */}
+                    <div className="bg-gradient-to-r from-orange-500/10 to-orange-600/10 border border-orange-400/20 p-6 rounded-xl">
+                        <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+                                    <DollarSign className="w-6 h-6 text-white" />
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-mono font-bold">Fawry (Egypt)</h4>
+                                    <p className="text-gray-400 text-sm">Local Egyptian payment method</p>
+                                </div>
+                            </div>
+                            <input
+                                type="checkbox"
+                                checked={storeData.payment_methods.fawry.enabled}
+                                onChange={(e) => handleInputChange('payment_methods.fawry', 'enabled', e.target.checked)}
+                                className="w-5 h-5 rounded"
+                            />
+                        </div>
+                        <div className="text-gray-300 text-sm">
+                            Processing Fee: {storeData.payment_methods.fawry.fees}% per transaction
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-red-500/10 to-red-600/10 border border-red-400/20 p-6 rounded-xl">
+                        <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center">
+                                    <Phone className="w-6 h-6 text-white" />
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-mono font-bold">Vodafone Cash</h4>
+                                    <p className="text-gray-400 text-sm">Mobile wallet payment</p>
+                                </div>
+                            </div>
+                            <input
+                                type="checkbox"
+                                checked={storeData.payment_methods.vodafone_cash.enabled}
+                                onChange={(e) => handleInputChange('payment_methods.vodafone_cash', 'enabled', e.target.checked)}
+                                className="w-5 h-5 rounded"
+                            />
+                        </div>
+                        <div className="text-gray-300 text-sm">
+                            Processing Fee: {storeData.payment_methods.vodafone_cash.fees}% per transaction
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/10 border border-yellow-400/20 p-6 rounded-2xl"
+            >
+                <h3 className="text-xl font-bold text-yellow-400 font-mono mb-6 flex items-center gap-2">
+                    <DollarSign className="w-6 h-6" />
+                    [COMMISSION_SETTINGS]
+                </h3>
+                
+                <div className="grid grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Platform Commission Rate
+                        </label>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="number"
+                                value={storeData.commission_rate}
+                                onChange={(e) => handleInputChange(null, 'commission_rate', parseFloat(e.target.value))}
+                                min="0"
+                                max="10"
+                                step="0.1"
+                                className="w-20 bg-gray-800/60 border border-gray-600 rounded-lg text-white px-3 py-2 font-mono"
+                            />
+                            <span className="text-gray-300">%</span>
+                        </div>
+                        <p className="text-gray-400 text-sm mt-1">
+                            Platform fee deducted from each sale
+                        </p>
+                    </div>
+
+                    <div className="bg-gray-800/30 p-4 rounded-lg">
+                        <h4 className="text-cyan-400 font-mono font-bold mb-2">Commission Breakdown</h4>
+                        <div className="space-y-1 text-sm">
+                            <div className="flex justify-between">
+                                <span className="text-gray-400">Sale Amount:</span>
+                                <span className="text-white">$100.00</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-400">Platform Fee ({storeData.commission_rate}%):</span>
+                                <span className="text-red-400">-${(100 * storeData.commission_rate / 100).toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between border-t border-gray-600 pt-1">
+                                <span className="text-gray-300">You Receive:</span>
+                                <span className="text-emerald-400 font-bold">${(100 - (100 * storeData.commission_rate / 100)).toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        </div>
+    );import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
-    Settings,
+    Store,
     Save,
-    RefreshCw,
-    Shield,
-    Key,
-    Bell,
+    Upload,
     Globe,
-    Server,
-    Database,
+    Palette,
+    Settings,
+    Image,
+    Type,
+    Layout,
     Code,
-    Mail,
-    Webhook,
     Eye,
-    EyeOff,
+    RefreshCw,
     CheckCircle,
     AlertTriangle,
-    Copy,
-    Download,
-    Upload,
-    Trash2,
-    Plus,
-    Edit,
-    X,
-    Clock,
-    Users,
-    Package,
-    DollarSign,
-    Activity,
-    Lock,
-    Unlock,
-    Zap,
-    Monitor,
-    HardDrive,
-    Cpu,
-    MemoryStick,
-    Network,
-    Wifi,
-    FileText,
-    BarChart3,
-    TrendingUp,
-    Calendar,
-    MessageSquare,
-    ExternalLink,
-    Terminal,
-    GitBranch,
     Info,
-    CreditCard
+    Camera,
+    Link,
+    Copy,
+    ExternalLink,
+    Monitor,
+    Smartphone,
+    Tablet,
+    Facebook,
+    Twitter,
+    Instagram,
+    Youtube,
+    MessageCircle,
+    Mail,
+    Phone,
+    MapPin,
+    Clock,
+    Star,
+    Shield,
+    Zap,
+    Users,
+    TrendingUp,
+    Package,
+    Crown,
+    Target,
+    Dice6,
+    Gamepad2
 } from "lucide-react";
 
-const SettingsPage = () => {
-    const [activeSection, setActiveSection] = useState("general");
+const StoreSettingsPage = () => {
+    const [activeTab, setActiveTab] = useState("general");
     const [saving, setSaving] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-    const [systemSettings, setSystemSettings] = useState({
+    const [previewMode, setPreviewMode] = useState("desktop");
+    
+    const [storeData, setStoreData] = useState({
         // General Settings
-        siteName: "NexusVault Dashboard",
-        siteDescription: "FiveM Store Management System",
-        timezone: "America/New_York",
-        language: "en",
-        dateFormat: "MM/DD/YYYY",
+        name: "Los Santos Roleplay Store",
+        tagline: "Premium FiveM Digital Items & Services",
+        description: "Official digital marketplace for Los Santos Roleplay server. Purchase VIP memberships, in-game money, vehicles, ranks, and more with instant automated delivery.",
+        logo: null,
+        favicon: null,
+        banner: null,
+        
+        // Server Connection
+        server: {
+            name: "Los Santos Roleplay",
+            ip: "connect.lsrp.com:30120",
+            rcon_password: "",
+            api_key: "",
+            connection_type: "rcon", // rcon, api, webhook
+            auto_delivery: true,
+            test_connection: false
+        },
+        
+        // Appearance
+        theme: "cyberpunk",
+        primaryColor: "#10B981",
+        secondaryColor: "#06B6D4",
+        accentColor: "#F59E0B",
+        font: "Inter",
+        
+        // Store Configuration
         currency: "USD",
-        maintenanceMode: false,
+        language: "en",
+        timezone: "America/New_York",
+        status: "online",
+        maintenance_message: "",
+        commission_rate: 5, // Platform commission percentage
         
-        // Security Settings
-        twoFactorAuth: true,
-        sessionTimeout: 30,
-        passwordPolicy: {
-            minLength: 8,
-            requireUppercase: true,
-            requireNumbers: true,
-            requireSymbols: true
-        },
-        maxLoginAttempts: 5,
-        bruteForceProtection: true,
-        
-        // API Settings
-        apiEnabled: true,
-        webhooksEnabled: true,
-        rateLimit: 1000,
-        apiVersion: "v1",
-        cors: {
-            enabled: true,
-            origins: ["https://yourdomain.com"]
+        // Payment Methods
+        payment_methods: {
+            paypal: { enabled: true, fees: 2.9 },
+            stripe: { enabled: true, fees: 2.9 },
+            fawry: { enabled: false, fees: 3.5 }, // Egyptian payment method
+            vodafone_cash: { enabled: false, fees: 2.5 },
+            crypto: { enabled: false, fees: 1.5 }
         },
         
-        // Email Settings
-        emailProvider: "smtp",
-        smtpHost: "smtp.gmail.com",
-        smtpPort: 587,
-        smtpUsername: "",
-        smtpPassword: "",
-        smtpSecurity: "tls",
-        fromEmail: "noreply@yourdomain.com",
-        fromName: "NexusVault",
-        
-        // Notification Settings
-        emailNotifications: true,
-        discordNotifications: true,
-        slackNotifications: false,
-        pushNotifications: true,
-        notificationTypes: {
-            newOrders: true,
-            paymentFailed: true,
-            lowStock: true,
-            systemAlerts: true,
-            userRegistration: false
+        // Contact & Social
+        contact: {
+            email: "support@lsrp-store.com",
+            discord: "https://discord.gg/lsrp",
+            website: "https://lsrp.com",
+            phone: "+1 (555) 123-4567"
+        },
+        social: {
+            facebook: "",
+            twitter: "",
+            instagram: "",
+            youtube: "",
+            tiktok: ""
         },
         
-        // System Performance
-        cacheEnabled: true,
-        cacheTimeout: 3600,
-        compressionEnabled: true,
-        minifyAssets: true,
-        cdnEnabled: false,
-        cdnUrl: "",
-        
-        // Backup Settings
-        autoBackup: true,
-        backupFrequency: "daily",
-        backupRetention: 30,
-        backupLocation: "local",
-        s3Bucket: "",
-        s3Region: "us-east-1",
-        
-        // Integration Settings
-        fivemServer: {
-            host: "127.0.0.1",
-            port: 30120,
-            password: "",
-            enabled: true
+        // Player Integration
+        integration: {
+            steam_api_key: "",
+            discord_bot_token: "",
+            require_steam: true,
+            require_discord: false,
+            auto_link_accounts: true,
+            verify_server_membership: true
         },
-        discordBot: {
-            token: "",
-            guildId: "",
-            enabled: false
-        },
-        paymentGateways: {
-            paypal: {
-                enabled: true,
-                sandboxMode: false,
-                clientId: "",
-                clientSecret: ""
-            },
-            stripe: {
-                enabled: true,
-                testMode: false,
-                publicKey: "",
-                secretKey: ""
+        
+        // Payout Settings
+        payout: {
+            method: "paypal", // paypal, bank, crypto
+            threshold: 100, // Minimum payout amount
+            schedule: "weekly", // daily, weekly, monthly
+            account_info: {
+                paypal_email: "",
+                bank_account: "",
+                crypto_wallet: ""
             }
         }
     });
 
-    const settingSections = [
-        { id: "general", label: "General", icon: <Settings className="w-5 h-5" /> },
-        { id: "security", label: "Security", icon: <Shield className="w-5 h-5" /> },
-        { id: "api", label: "API & Webhooks", icon: <Code className="w-5 h-5" /> },
-        { id: "email", label: "Email", icon: <Mail className="w-5 h-5" /> },
-        { id: "notifications", label: "Notifications", icon: <Bell className="w-5 h-5" /> },
-        { id: "performance", label: "Performance", icon: <Zap className="w-5 h-5" /> },
-        { id: "backup", label: "Backup", icon: <Database className="w-5 h-5" /> },
-        { id: "integrations", label: "Integrations", icon: <Webhook className="w-5 h-5" /> }
+    const settingsTabs = [
+        { id: "general", label: "General", icon: <Store className="w-5 h-5" /> },
+        { id: "server", label: "Server Connection", icon: <Server className="w-5 h-5" /> },
+        { id: "appearance", label: "Appearance", icon: <Palette className="w-5 h-5" /> },
+        { id: "payments", label: "Payment Methods", icon: <CreditCard className="w-5 h-5" /> },
+        { id: "integration", label: "Player Integration", icon: <Users className="w-5 h-5" /> },
+        { id: "payout", label: "Payout Settings", icon: <DollarSign className="w-5 h-5" /> },
+        { id: "contact", label: "Contact & Social", icon: <Mail className="w-5 h-5" /> }
+    ];
+
+    const themes = [
+        { id: "cyberpunk", name: "Cyberpunk", colors: ["#10B981", "#06B6D4", "#8B5CF6"] },
+        { id: "modern", name: "Modern", colors: ["#3B82F6", "#EF4444", "#F59E0B"] },
+        { id: "minimal", name: "Minimal", colors: ["#6B7280", "#1F2937", "#F3F4F6"] },
+        { id: "gaming", name: "Gaming", colors: ["#10B981", "#F59E0B", "#EF4444"] },
+        { id: "neon", name: "Neon", colors: ["#EC4899", "#06B6D4", "#F59E0B"] }
     ];
 
     const handleInputChange = (section, field, value) => {
         if (section) {
-            setSystemSettings(prev => ({
+            setStoreData(prev => ({
                 ...prev,
                 [section]: {
                     ...prev[section],
@@ -174,7 +676,7 @@ const SettingsPage = () => {
                 }
             }));
         } else {
-            setSystemSettings(prev => ({
+            setStoreData(prev => ({
                 ...prev,
                 [field]: value
             }));
@@ -185,7 +687,7 @@ const SettingsPage = () => {
         setSaving(true);
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 2000));
-        console.log("Saving settings:", systemSettings);
+        console.log("Saving store settings:", storeData);
         setSaving(false);
     };
 
@@ -197,76 +699,70 @@ const SettingsPage = () => {
                 className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
             >
                 <h3 className="text-xl font-bold text-emerald-400 font-mono mb-6 flex items-center gap-2">
-                    <Globe className="w-6 h-6" />
-                    [SITE_CONFIGURATION]
+                    <Store className="w-6 h-6" />
+                    [STORE_IDENTITY]
                 </h3>
 
                 <div className="grid grid-cols-2 gap-6">
-                    <div>
+                    <div className="col-span-2">
                         <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Site Name
+                            Store Name
                         </label>
                         <input
                             type="text"
-                            value={systemSettings.siteName}
-                            onChange={(e) => handleInputChange(null, 'siteName', e.target.value)}
+                            value={storeData.name}
+                            onChange={(e) => handleInputChange(null, 'name', e.target.value)}
                             className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
                         />
-                    </div>
-
-                    <div>
-                        <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Timezone
-                        </label>
-                        <select
-                            value={systemSettings.timezone}
-                            onChange={(e) => handleInputChange(null, 'timezone', e.target.value)}
-                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
-                        >
-                            <option value="America/New_York">Eastern Time (EST)</option>
-                            <option value="America/Chicago">Central Time (CST)</option>
-                            <option value="America/Denver">Mountain Time (MST)</option>
-                            <option value="America/Los_Angeles">Pacific Time (PST)</option>
-                            <option value="Europe/London">London (GMT)</option>
-                            <option value="Europe/Paris">Paris (CET)</option>
-                            <option value="Asia/Tokyo">Tokyo (JST)</option>
-                        </select>
                     </div>
 
                     <div className="col-span-2">
                         <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Site Description
+                            Tagline
+                        </label>
+                        <input
+                            type="text"
+                            value={storeData.tagline}
+                            onChange={(e) => handleInputChange(null, 'tagline', e.target.value)}
+                            placeholder="A short catchy phrase about your store"
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        />
+                    </div>
+
+                    <div className="col-span-2">
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Description
                         </label>
                         <textarea
-                            value={systemSettings.siteDescription}
-                            onChange={(e) => handleInputChange(null, 'siteDescription', e.target.value)}
-                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono h-24 resize-none focus:border-emerald-400 transition-all duration-300"
+                            value={storeData.description}
+                            onChange={(e) => handleInputChange(null, 'description', e.target.value)}
+                            placeholder="Detailed description of your store and what you offer"
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono h-32 resize-none focus:border-emerald-400 transition-all duration-300"
                         />
                     </div>
 
                     <div>
                         <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Default Language
+                            Store Status
                         </label>
                         <select
-                            value={systemSettings.language}
-                            onChange={(e) => handleInputChange(null, 'language', e.target.value)}
+                            value={storeData.status}
+                            onChange={(e) => handleInputChange(null, 'status', e.target.value)}
                             className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
                         >
-                            <option value="en">English</option>
-                            <option value="es">Español</option>
-                            <option value="fr">Français</option>
-                            <option value="de">Deutsch</option>
-                            <option value="pt">Português</option>
+                            <option value="online">Online</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="private">Private</option>
+                            <option value="coming_soon">Coming Soon</option>
                         </select>
                     </div>
 
                     <div>
                         <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Default Currency
+                            Currency
                         </label>
                         <select
-                            value={systemSettings.currency}
+                            value={storeData.currency}
                             onChange={(e) => handleInputChange(null, 'currency', e.target.value)}
                             className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
                         >
@@ -277,326 +773,93 @@ const SettingsPage = () => {
                         </select>
                     </div>
                 </div>
-
-                <div className="mt-6 flex items-center gap-3">
-                    <input
-                        type="checkbox"
-                        checked={systemSettings.maintenanceMode}
-                        onChange={(e) => handleInputChange(null, 'maintenanceMode', e.target.checked)}
-                        className="w-5 h-5 rounded"
-                    />
-                    <label className="text-gray-300 font-mono font-semibold">
-                        Maintenance Mode (Disable public access)
-                    </label>
-                </div>
-            </motion.div>
-        </div>
-    );
-
-    const renderSecuritySettings = () => (
-        <div className="space-y-6">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
-            >
-                <h3 className="text-xl font-bold text-red-400 font-mono mb-6 flex items-center gap-2">
-                    <Shield className="w-6 h-6" />
-                    [SECURITY_CONFIGURATION]
-                </h3>
-
-                <div className="grid grid-cols-2 gap-6">
-                    <div>
-                        <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Session Timeout (minutes)
-                        </label>
-                        <input
-                            type="number"
-                            value={systemSettings.sessionTimeout}
-                            onChange={(e) => handleInputChange(null, 'sessionTimeout', parseInt(e.target.value))}
-                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-red-400 transition-all duration-300"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Max Login Attempts
-                        </label>
-                        <input
-                            type="number"
-                            value={systemSettings.maxLoginAttempts}
-                            onChange={(e) => handleInputChange(null, 'maxLoginAttempts', parseInt(e.target.value))}
-                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-red-400 transition-all duration-300"
-                        />
-                    </div>
-                </div>
-
-                <div className="mt-6 space-y-4">
-                    <div className="flex items-center gap-3">
-                        <input
-                            type="checkbox"
-                            checked={systemSettings.twoFactorAuth}
-                            onChange={(e) => handleInputChange(null, 'twoFactorAuth', e.target.checked)}
-                            className="w-5 h-5 rounded"
-                        />
-                        <label className="text-gray-300 font-mono font-semibold">
-                            Require Two-Factor Authentication
-                        </label>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                        <input
-                            type="checkbox"
-                            checked={systemSettings.bruteForceProtection}
-                            onChange={(e) => handleInputChange(null, 'bruteForceProtection', e.target.checked)}
-                            className="w-5 h-5 rounded"
-                        />
-                        <label className="text-gray-300 font-mono font-semibold">
-                            Enable Brute Force Protection
-                        </label>
-                    </div>
-                </div>
             </motion.div>
 
+            {/* Logo & Branding */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
-            >
-                <h3 className="text-xl font-bold text-orange-400 font-mono mb-6 flex items-center gap-2">
-                    <Key className="w-6 h-6" />
-                    [PASSWORD_POLICY]
-                </h3>
-
-                <div className="grid grid-cols-2 gap-6">
-                    <div>
-                        <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Minimum Length
-                        </label>
-                        <input
-                            type="number"
-                            value={systemSettings.passwordPolicy.minLength}
-                            onChange={(e) => handleInputChange('passwordPolicy', 'minLength', parseInt(e.target.value))}
-                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-orange-400 transition-all duration-300"
-                        />
-                    </div>
-
-                    <div className="space-y-3">
-                        <div className="flex items-center gap-3">
-                            <input
-                                type="checkbox"
-                                checked={systemSettings.passwordPolicy.requireUppercase}
-                                onChange={(e) => handleInputChange('passwordPolicy', 'requireUppercase', e.target.checked)}
-                                className="w-4 h-4 rounded"
-                            />
-                            <label className="text-gray-300 font-mono text-sm">
-                                Require Uppercase Letters
-                            </label>
-                        </div>
-
-                        <div className="flex items-center gap-3">
-                            <input
-                                type="checkbox"
-                                checked={systemSettings.passwordPolicy.requireNumbers}
-                                onChange={(e) => handleInputChange('passwordPolicy', 'requireNumbers', e.target.checked)}
-                                className="w-4 h-4 rounded"
-                            />
-                            <label className="text-gray-300 font-mono text-sm">
-                                Require Numbers
-                            </label>
-                        </div>
-
-                        <div className="flex items-center gap-3">
-                            <input
-                                type="checkbox"
-                                checked={systemSettings.passwordPolicy.requireSymbols}
-                                onChange={(e) => handleInputChange('passwordPolicy', 'requireSymbols', e.target.checked)}
-                                className="w-4 h-4 rounded"
-                            />
-                            <label className="text-gray-300 font-mono text-sm">
-                                Require Special Characters
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </motion.div>
-        </div>
-    );
-
-    const renderAPISettings = () => (
-        <div className="space-y-6">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
                 className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
             >
                 <h3 className="text-xl font-bold text-cyan-400 font-mono mb-6 flex items-center gap-2">
-                    <Code className="w-6 h-6" />
-                    [API_CONFIGURATION]
+                    <Image className="w-6 h-6" />
+                    [BRANDING_ASSETS]
                 </h3>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-3 gap-6">
                     <div>
-                        <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            API Version
+                        <label className="block text-gray-300 font-mono font-semibold mb-4">
+                            Store Logo
                         </label>
-                        <input
-                            type="text"
-                            value={systemSettings.apiVersion}
-                            onChange={(e) => handleInputChange(null, 'apiVersion', e.target.value)}
-                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-cyan-400 transition-all duration-300"
-                        />
+                        <div className="bg-gray-800/30 border-2 border-dashed border-gray-600 rounded-xl p-8 text-center hover:border-cyan-400 transition-colors cursor-pointer">
+                            <Camera className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                            <p className="text-gray-400 text-sm font-mono">Upload Logo</p>
+                            <p className="text-gray-500 text-xs">PNG, JPG up to 2MB</p>
+                        </div>
                     </div>
 
                     <div>
-                        <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Rate Limit (requests/hour)
+                        <label className="block text-gray-300 font-mono font-semibold mb-4">
+                            Favicon
                         </label>
-                        <input
-                            type="number"
-                            value={systemSettings.rateLimit}
-                            onChange={(e) => handleInputChange(null, 'rateLimit', parseInt(e.target.value))}
-                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-cyan-400 transition-all duration-300"
-                        />
-                    </div>
-                </div>
-
-                <div className="mt-6 space-y-4">
-                    <div className="flex items-center gap-3">
-                        <input
-                            type="checkbox"
-                            checked={systemSettings.apiEnabled}
-                            onChange={(e) => handleInputChange(null, 'apiEnabled', e.target.checked)}
-                            className="w-5 h-5 rounded"
-                        />
-                        <label className="text-gray-300 font-mono font-semibold">
-                            Enable API Access
-                        </label>
+                        <div className="bg-gray-800/30 border-2 border-dashed border-gray-600 rounded-xl p-8 text-center hover:border-cyan-400 transition-colors cursor-pointer">
+                            <Globe className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                            <p className="text-gray-400 text-sm font-mono">Upload Favicon</p>
+                            <p className="text-gray-500 text-xs">ICO, PNG 32x32px</p>
+                        </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                        <input
-                            type="checkbox"
-                            checked={systemSettings.webhooksEnabled}
-                            onChange={(e) => handleInputChange(null, 'webhooksEnabled', e.target.checked)}
-                            className="w-5 h-5 rounded"
-                        />
-                        <label className="text-gray-300 font-mono font-semibold">
-                            Enable Webhooks
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-4">
+                            Banner Image
                         </label>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                        <input
-                            type="checkbox"
-                            checked={systemSettings.cors.enabled}
-                            onChange={(e) => handleInputChange('cors', 'enabled', e.target.checked)}
-                            className="w-5 h-5 rounded"
-                        />
-                        <label className="text-gray-300 font-mono font-semibold">
-                            Enable CORS
-                        </label>
-                    </div>
-                </div>
-            </motion.div>
-
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-400/20 p-6 rounded-2xl"
-            >
-                <h4 className="text-blue-400 font-mono font-bold mb-4 flex items-center gap-2">
-                    <Terminal className="w-5 h-5" />
-                    API ENDPOINTS
-                </h4>
-                <div className="space-y-2 font-mono text-sm">
-                    <div className="flex justify-between">
-                        <span className="text-gray-300">Base URL:</span>
-                        <span className="text-cyan-400">https://api.yourdomain.com/v1</span>
-                    </div>
-                    <div className="flex justify-between">
-                        <span className="text-gray-300">Documentation:</span>
-                        <span className="text-cyan-400">/docs</span>
-                    </div>
-                    <div className="flex justify-between">
-                        <span className="text-gray-300">Authentication:</span>
-                        <span className="text-yellow-400">Bearer Token</span>
+                        <div className="bg-gray-800/30 border-2 border-dashed border-gray-600 rounded-xl p-8 text-center hover:border-cyan-400 transition-colors cursor-pointer">
+                            <Layout className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                            <p className="text-gray-400 text-sm font-mono">Upload Banner</p>
+                            <p className="text-gray-500 text-xs">1920x400px recommended</p>
+                        </div>
                     </div>
                 </div>
             </motion.div>
         </div>
     );
 
-    const renderIntegrationsSettings = () => (
+    const renderAppearanceSettings = () => (
         <div className="space-y-6">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
             >
-                <h3 className="text-xl font-bold text-purple-400 font-mono mb-6 flex items-center gap-2">
-                    <Server className="w-6 h-6" />
-                    [FIVEM_SERVER]
+                <h3 className="text-xl font-bold text-emerald-400 font-mono mb-6 flex items-center gap-2">
+                    <Palette className="w-6 h-6" />
+                    [THEME_SELECTION]
                 </h3>
 
-                <div className="grid grid-cols-2 gap-6">
-                    <div>
-                        <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Server Host
-                        </label>
-                        <input
-                            type="text"
-                            value={systemSettings.fivemServer.host}
-                            onChange={(e) => handleInputChange('fivemServer', 'host', e.target.value)}
-                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-purple-400 transition-all duration-300"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Server Port
-                        </label>
-                        <input
-                            type="number"
-                            value={systemSettings.fivemServer.port}
-                            onChange={(e) => handleInputChange('fivemServer', 'port', parseInt(e.target.value))}
-                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-purple-400 transition-all duration-300"
-                        />
-                    </div>
-
-                    <div className="col-span-2">
-                        <label className="block text-gray-300 font-mono font-semibold mb-2">
-                            Server Password
-                        </label>
-                        <div className="relative">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                value={systemSettings.fivemServer.password}
-                                onChange={(e) => handleInputChange('fivemServer', 'password', e.target.value)}
-                                className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 pr-12 font-mono focus:border-purple-400 transition-all duration-300"
-                            />
-                            <button
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
-                            >
-                                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                            </button>
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                    {themes.map((theme) => (
+                        <div
+                            key={theme.id}
+                            onClick={() => handleInputChange(null, 'theme', theme.id)}
+                            className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                                storeData.theme === theme.id
+                                    ? 'border-emerald-400 bg-emerald-500/10'
+                                    : 'border-gray-600 bg-gray-800/30 hover:border-gray-500'
+                            }`}
+                        >
+                            <h4 className="text-white font-mono font-bold mb-3">{theme.name}</h4>
+                            <div className="flex gap-2">
+                                {theme.colors.map((color, index) => (
+                                    <div
+                                        key={index}
+                                        className="w-6 h-6 rounded-full"
+                                        style={{ backgroundColor: color }}
+                                    ></div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div className="mt-6 flex items-center gap-3">
-                    <input
-                        type="checkbox"
-                        checked={systemSettings.fivemServer.enabled}
-                        onChange={(e) => handleInputChange('fivemServer', 'enabled', e.target.checked)}
-                        className="w-5 h-5 rounded"
-                    />
-                    <label className="text-gray-300 font-mono font-semibold">
-                        Enable FiveM Integration
-                    </label>
+                    ))}
                 </div>
             </motion.div>
 
@@ -606,112 +869,274 @@ const SettingsPage = () => {
                 transition={{ delay: 0.1 }}
                 className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
             >
-                <h3 className="text-xl font-bold text-blue-400 font-mono mb-6 flex items-center gap-2">
-                    <CreditCard className="w-6 h-6" />
-                    [PAYMENT_GATEWAYS]
+                <h3 className="text-xl font-bold text-cyan-400 font-mono mb-6 flex items-center gap-2">
+                    <Type className="w-6 h-6" />
+                    [CUSTOM_COLORS]
                 </h3>
 
-                <div className="space-y-6">
-                    {/* PayPal */}
-                    <div className="bg-gray-800/30 p-4 rounded-xl border border-gray-600">
-                        <div className="flex items-center justify-between mb-4">
-                            <h4 className="text-white font-mono font-bold">PayPal</h4>
+                <div className="grid grid-cols-3 gap-6">
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Primary Color
+                        </label>
+                        <div className="flex gap-2">
                             <input
-                                type="checkbox"
-                                checked={systemSettings.paymentGateways.paypal.enabled}
-                                onChange={(e) => handleInputChange('paymentGateways.paypal', 'enabled', e.target.checked)}
-                                className="w-5 h-5 rounded"
+                                type="color"
+                                value={storeData.primaryColor}
+                                onChange={(e) => handleInputChange(null, 'primaryColor', e.target.value)}
+                                className="w-12 h-12 rounded-lg border border-gray-600 bg-gray-800"
                             />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-gray-400 font-mono text-sm mb-1">
-                                    Client ID
-                                </label>
-                                <input
-                                    type="text"
-                                    value={systemSettings.paymentGateways.paypal.clientId}
-                                    onChange={(e) => handleInputChange('paymentGateways.paypal', 'clientId', e.target.value)}
-                                    className="w-full bg-gray-700 border border-gray-600 rounded-lg text-white px-3 py-2 font-mono text-sm"
-                                    disabled={!systemSettings.paymentGateways.paypal.enabled}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-400 font-mono text-sm mb-1">
-                                    Client Secret
-                                </label>
-                                <input
-                                    type="password"
-                                    value={systemSettings.paymentGateways.paypal.clientSecret}
-                                    onChange={(e) => handleInputChange('paymentGateways.paypal', 'clientSecret', e.target.value)}
-                                    className="w-full bg-gray-700 border border-gray-600 rounded-lg text-white px-3 py-2 font-mono text-sm"
-                                    disabled={!systemSettings.paymentGateways.paypal.enabled}
-                                />
-                            </div>
-                        </div>
-                        <div className="mt-3 flex items-center gap-3">
                             <input
-                                type="checkbox"
-                                checked={systemSettings.paymentGateways.paypal.sandboxMode}
-                                onChange={(e) => handleInputChange('paymentGateways.paypal', 'sandboxMode', e.target.checked)}
-                                className="w-4 h-4 rounded"
-                                disabled={!systemSettings.paymentGateways.paypal.enabled}
+                                type="text"
+                                value={storeData.primaryColor}
+                                onChange={(e) => handleInputChange(null, 'primaryColor', e.target.value)}
+                                className="flex-1 bg-gray-800/60 border border-gray-600 rounded-lg text-white px-3 py-2 font-mono"
                             />
-                            <label className="text-gray-400 font-mono text-sm">
-                                Sandbox Mode (Testing)
-                            </label>
                         </div>
                     </div>
 
-                    {/* Stripe */}
-                    <div className="bg-gray-800/30 p-4 rounded-xl border border-gray-600">
-                        <div className="flex items-center justify-between mb-4">
-                            <h4 className="text-white font-mono font-bold">Stripe</h4>
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Secondary Color
+                        </label>
+                        <div className="flex gap-2">
                             <input
-                                type="checkbox"
-                                checked={systemSettings.paymentGateways.stripe.enabled}
-                                onChange={(e) => handleInputChange('paymentGateways.stripe', 'enabled', e.target.checked)}
-                                className="w-5 h-5 rounded"
+                                type="color"
+                                value={storeData.secondaryColor}
+                                onChange={(e) => handleInputChange(null, 'secondaryColor', e.target.value)}
+                                className="w-12 h-12 rounded-lg border border-gray-600 bg-gray-800"
+                            />
+                            <input
+                                type="text"
+                                value={storeData.secondaryColor}
+                                onChange={(e) => handleInputChange(null, 'secondaryColor', e.target.value)}
+                                className="flex-1 bg-gray-800/60 border border-gray-600 rounded-lg text-white px-3 py-2 font-mono"
                             />
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-gray-400 font-mono text-sm mb-1">
-                                    Public Key
-                                </label>
-                                <input
-                                    type="text"
-                                    value={systemSettings.paymentGateways.stripe.publicKey}
-                                    onChange={(e) => handleInputChange('paymentGateways.stripe', 'publicKey', e.target.value)}
-                                    className="w-full bg-gray-700 border border-gray-600 rounded-lg text-white px-3 py-2 font-mono text-sm"
-                                    disabled={!systemSettings.paymentGateways.stripe.enabled}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-400 font-mono text-sm mb-1">
-                                    Secret Key
-                                </label>
-                                <input
-                                    type="password"
-                                    value={systemSettings.paymentGateways.stripe.secretKey}
-                                    onChange={(e) => handleInputChange('paymentGateways.stripe', 'secretKey', e.target.value)}
-                                    className="w-full bg-gray-700 border border-gray-600 rounded-lg text-white px-3 py-2 font-mono text-sm"
-                                    disabled={!systemSettings.paymentGateways.stripe.enabled}
-                                />
-                            </div>
-                        </div>
-                        <div className="mt-3 flex items-center gap-3">
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Accent Color
+                        </label>
+                        <div className="flex gap-2">
                             <input
-                                type="checkbox"
-                                checked={systemSettings.paymentGateways.stripe.testMode}
-                                onChange={(e) => handleInputChange('paymentGateways.stripe', 'testMode', e.target.checked)}
-                                className="w-4 h-4 rounded"
-                                disabled={!systemSettings.paymentGateways.stripe.enabled}
+                                type="color"
+                                value={storeData.accentColor}
+                                onChange={(e) => handleInputChange(null, 'accentColor', e.target.value)}
+                                className="w-12 h-12 rounded-lg border border-gray-600 bg-gray-800"
                             />
-                            <label className="text-gray-400 font-mono text-sm">
-                                Test Mode
-                            </label>
+                            <input
+                                type="text"
+                                value={storeData.accentColor}
+                                onChange={(e) => handleInputChange(null, 'accentColor', e.target.value)}
+                                className="flex-1 bg-gray-800/60 border border-gray-600 rounded-lg text-white px-3 py-2 font-mono"
+                            />
                         </div>
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* Preview */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
+            >
+                <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-bold text-purple-400 font-mono flex items-center gap-2">
+                        <Eye className="w-6 h-6" />
+                        [LIVE_PREVIEW]
+                    </h3>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() => setPreviewMode("desktop")}
+                            className={`p-2 rounded-lg transition-colors ${
+                                previewMode === "desktop" ? 'bg-purple-500/20 text-purple-400' : 'text-gray-400 hover:text-white'
+                            }`}
+                        >
+                            <Monitor className="w-5 h-5" />
+                        </button>
+                        <button
+                            onClick={() => setPreviewMode("tablet")}
+                            className={`p-2 rounded-lg transition-colors ${
+                                previewMode === "tablet" ? 'bg-purple-500/20 text-purple-400' : 'text-gray-400 hover:text-white'
+                            }`}
+                        >
+                            <Tablet className="w-5 h-5" />
+                        </button>
+                        <button
+                            onClick={() => setPreviewMode("mobile")}
+                            className={`p-2 rounded-lg transition-colors ${
+                                previewMode === "mobile" ? 'bg-purple-500/20 text-purple-400' : 'text-gray-400 hover:text-white'
+                            }`}
+                        >
+                            <Smartphone className="w-5 h-5" />
+                        </button>
+                    </div>
+                </div>
+
+                <div className="bg-gray-900 rounded-xl p-4 border border-gray-700">
+                    <div className="bg-gray-800 rounded-lg p-6" style={{ 
+                        background: `linear-gradient(135deg, ${storeData.primaryColor}15, ${storeData.secondaryColor}15)`
+                    }}>
+                        <h4 className="text-2xl font-bold text-white mb-2">{storeData.name}</h4>
+                        <p className="text-gray-300 mb-4">{storeData.tagline}</p>
+                        <div className="flex gap-4">
+                            <div 
+                                className="px-4 py-2 rounded-lg font-mono font-bold"
+                                style={{ backgroundColor: storeData.primaryColor, color: 'white' }}
+                            >
+                                SHOP_NOW
+                            </div>
+                            <div 
+                                className="px-4 py-2 rounded-lg border font-mono font-bold"
+                                style={{ 
+                                    borderColor: storeData.secondaryColor,
+                                    color: storeData.secondaryColor
+                                }}
+                            >
+                                LEARN_MORE
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        </div>
+    );
+
+    const renderContactSettings = () => (
+        <div className="space-y-6">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
+            >
+                <h3 className="text-xl font-bold text-emerald-400 font-mono mb-6 flex items-center gap-2">
+                    <Mail className="w-6 h-6" />
+                    [CONTACT_INFORMATION]
+                </h3>
+
+                <div className="grid grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Support Email
+                        </label>
+                        <input
+                            type="email"
+                            value={storeData.contact.email}
+                            onChange={(e) => handleInputChange('contact', 'email', e.target.value)}
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Phone Number
+                        </label>
+                        <input
+                            type="tel"
+                            value={storeData.contact.phone}
+                            onChange={(e) => handleInputChange('contact', 'phone', e.target.value)}
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Discord Server
+                        </label>
+                        <input
+                            type="url"
+                            value={storeData.contact.discord}
+                            onChange={(e) => handleInputChange('contact', 'discord', e.target.value)}
+                            placeholder="https://discord.gg/..."
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2">
+                            Website
+                        </label>
+                        <input
+                            type="url"
+                            value={storeData.contact.website}
+                            onChange={(e) => handleInputChange('contact', 'website', e.target.value)}
+                            placeholder="https://..."
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-emerald-400 transition-all duration-300"
+                        />
+                    </div>
+                </div>
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700"
+            >
+                <h3 className="text-xl font-bold text-cyan-400 font-mono mb-6 flex items-center gap-2">
+                    <MessageCircle className="w-6 h-6" />
+                    [SOCIAL_MEDIA]
+                </h3>
+
+                <div className="grid grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2 flex items-center gap-2">
+                            <Facebook className="w-4 h-4" />
+                            Facebook
+                        </label>
+                        <input
+                            type="url"
+                            value={storeData.social.facebook}
+                            onChange={(e) => handleInputChange('social', 'facebook', e.target.value)}
+                            placeholder="https://facebook.com/..."
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-cyan-400 transition-all duration-300"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2 flex items-center gap-2">
+                            <Twitter className="w-4 h-4" />
+                            Twitter
+                        </label>
+                        <input
+                            type="url"
+                            value={storeData.social.twitter}
+                            onChange={(e) => handleInputChange('social', 'twitter', e.target.value)}
+                            placeholder="https://twitter.com/..."
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-cyan-400 transition-all duration-300"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2 flex items-center gap-2">
+                            <Instagram className="w-4 h-4" />
+                            Instagram
+                        </label>
+                        <input
+                            type="url"
+                            value={storeData.social.instagram}
+                            onChange={(e) => handleInputChange('social', 'instagram', e.target.value)}
+                            placeholder="https://instagram.com/..."
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-cyan-400 transition-all duration-300"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-300 font-mono font-semibold mb-2 flex items-center gap-2">
+                            <Youtube className="w-4 h-4" />
+                            YouTube
+                        </label>
+                        <input
+                            type="url"
+                            value={storeData.social.youtube}
+                            onChange={(e) => handleInputChange('social', 'youtube', e.target.value)}
+                            placeholder="https://youtube.com/..."
+                            className="w-full bg-gray-800/60 border border-gray-600 rounded-xl text-white px-4 py-3 font-mono focus:border-cyan-400 transition-all duration-300"
+                        />
                     </div>
                 </div>
             </motion.div>
@@ -719,26 +1144,43 @@ const SettingsPage = () => {
     );
 
     const renderContent = () => {
-        switch (activeSection) {
+        switch (activeTab) {
             case "general":
                 return renderGeneralSettings();
-            case "security":
-                return renderSecuritySettings();
-            case "api":
-                return renderAPISettings();
-            case "integrations":
-                return renderIntegrationsSettings();
-            case "email":
-            case "notifications":
-            case "performance":
-            case "backup":
+            case "appearance":
+                return renderAppearanceSettings();
+            case "contact":
+                return renderContactSettings();
+            case "features":
                 return (
                     <div className="text-center py-20">
                         <div className="text-gray-400 font-mono text-xl mb-4">
-                            [SECTION_UNDER_DEVELOPMENT]
+                            [FEATURES_SETTINGS]
                         </div>
                         <p className="text-gray-500 font-mono">
-                            This settings section is being built. Check back soon!
+                            Feature settings panel coming soon...
+                        </p>
+                    </div>
+                );
+            case "seo":
+                return (
+                    <div className="text-center py-20">
+                        <div className="text-gray-400 font-mono text-xl mb-4">
+                            [SEO_ANALYTICS]
+                        </div>
+                        <p className="text-gray-500 font-mono">
+                            SEO and analytics settings coming soon...
+                        </p>
+                    </div>
+                );
+            case "legal":
+                return (
+                    <div className="text-center py-20">
+                        <div className="text-gray-400 font-mono text-xl mb-4">
+                            [LEGAL_COMPLIANCE]
+                        </div>
+                        <p className="text-gray-500 font-mono">
+                            Legal and compliance settings coming soon...
                         </p>
                     </div>
                 );
@@ -757,16 +1199,16 @@ const SettingsPage = () => {
             >
                 <div>
                     <h1 className="text-3xl font-black text-white font-mono mb-2">
-                        [SYSTEM_SETTINGS]
+                        [STORE_CONFIGURATION]
                     </h1>
                     <p className="text-gray-400 font-mono">
-                        Configure system behavior, security, and integrations
+                        Configure your FiveM server store and payment integration
                     </p>
                 </div>
                 <div className="flex gap-3">
                     <button className="bg-gray-700/50 text-gray-400 px-6 py-3 rounded-xl font-mono font-bold hover:bg-gray-600/50 hover:text-white transition-all duration-300">
-                        <Download className="w-5 h-5 inline mr-2" />
-                        EXPORT
+                        <Eye className="w-5 h-5 inline mr-2" />
+                        PREVIEW
                     </button>
                     <button
                         onClick={handleSave}
@@ -797,41 +1239,48 @@ const SettingsPage = () => {
                         className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-6 rounded-2xl border border-gray-700 sticky top-0"
                     >
                         <h2 className="text-lg font-bold text-emerald-400 font-mono mb-6">
-                            [CONFIGURATION]
+                            [SETTINGS_MENU]
                         </h2>
                         <nav className="space-y-2">
-                            {settingSections.map((section) => (
+                            {settingsTabs.map((tab) => (
                                 <motion.button
-                                    key={section.id}
-                                    onClick={() => setActiveSection(section.id)}
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
                                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 font-mono text-left ${
-                                        activeSection === section.id
+                                        activeTab === tab.id
                                             ? 'bg-gradient-to-r from-emerald-600/20 to-cyan-600/20 border border-emerald-400/30 text-emerald-400'
                                             : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
                                     }`}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
-                                    {section.icon}
-                                    <span className="text-sm font-bold">{section.label}</span>
+                                    {tab.icon}
+                                    <span className="text-sm font-bold">{tab.label}</span>
                                 </motion.button>
                             ))}
                         </nav>
 
-                        {/* System Status */}
+                        {/* Quick Stats */}
                         <div className="mt-8 space-y-3">
-                            <h3 className="text-cyan-400 font-mono font-bold text-sm">SYSTEM_STATUS</h3>
+                            <h3 className="text-cyan-400 font-mono font-bold text-sm">SERVER_STATUS</h3>
                             <div className="bg-gray-800/30 p-3 rounded-lg">
-                                <div className="text-emerald-400 font-mono font-bold">ONLINE</div>
-                                <div className="text-gray-400 text-xs">System Status</div>
+                                <div className="text-emerald-400 font-mono font-bold flex items-center gap-2">
+                                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                                    CONNECTED
+                                </div>
+                                <div className="text-gray-400 text-xs">FiveM Server</div>
                             </div>
                             <div className="bg-gray-800/30 p-3 rounded-lg">
-                                <div className="text-cyan-400 font-mono font-bold">v2.1.4</div>
-                                <div className="text-gray-400 text-xs">Version</div>
+                                <div className="text-cyan-400 font-mono font-bold">247/300</div>
+                                <div className="text-gray-400 text-xs">Players Online</div>
                             </div>
                             <div className="bg-gray-800/30 p-3 rounded-lg">
-                                <div className="text-yellow-400 font-mono font-bold">99.8%</div>
-                                <div className="text-gray-400 text-xs">Uptime</div>
+                                <div className="text-yellow-400 font-mono font-bold">${storeData.commission_rate}%</div>
+                                <div className="text-gray-400 text-xs">Commission Rate</div>
+                            </div>
+                            <div className="bg-gray-800/30 p-3 rounded-lg">
+                                <div className="text-purple-400 font-mono font-bold">98.7%</div>
+                                <div className="text-gray-400 text-xs">Auto Delivery</div>
                             </div>
                         </div>
                     </motion.div>
@@ -840,7 +1289,7 @@ const SettingsPage = () => {
                 {/* Settings Content */}
                 <div className="col-span-3">
                     <motion.div
-                        key={activeSection}
+                        key={activeTab}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3 }}
@@ -853,4 +1302,4 @@ const SettingsPage = () => {
     );
 };
 
-export default SettingsPage;
+export default StoreSettingsPage;

@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import LogoApp from "./LogoApp";
 import { useNavigate } from "react-router";
 import PagesURL from "../constants/PagesURL";
+import { useSelector } from "react-redux";
 
 const HeaderComponent = () => {
     const [scrollY, setScrollY] = useState(0);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
     const navigate = useNavigate();
 
@@ -22,7 +24,9 @@ const HeaderComponent = () => {
             ? "bg-gray-900/95 backdrop-blur-xl border-b border-gray-800/50"
             : "bg-transparent";
 
-    return (
+    return isAuthenticated ? (
+        <div>Authenticate</div>
+    ) : (
         <nav
             className={`fixed top-0 w-full z-50 transition-all duration-300 ${navClass}`}
         >

@@ -8,6 +8,7 @@ import AuthLayout from "./layouts/AuthLayout";
 import SettingsPage from "./pages/auth/SettingsPage";
 import TermsPage from "./pages/guest/TermsPage";
 import PrivacyPage from "./pages/guest/PrivacyPage";
+import Store from "./pages/guest/CustomerStorePage";
 import PaymentsPage from "./pages/auth/PaymentsPage";
 import DocsPage from "./pages/auth/DocsPage";
 import ErrorPage from "./pages/ErrorPage";
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
             {
                 path: PagesURL.PRIVACY.URL,
                 element: <PrivacyPage />,
+            },
+            {
+                path: PagesURL.STORE.URL,
+                element: <Store />,
             },
         ],
     },

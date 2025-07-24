@@ -33,6 +33,11 @@ const PagesURL = {
         URL: "/privacy",
         ICON: GiStrikingDiamonds,
     },
+    STORE: {
+        TITLE: "Store",
+        URL: "/store",
+        ICON: GiStrikingDiamonds,
+    },
     DASHBOARD: {
         TITLE: "Dashboard",
         URL: "/dashboard",

@@ -16,6 +16,23 @@ html {
     font-family: "Roboto Slab", serif;
 }
 
+::-webkit-scrollbar {
+    background-color: #666;
+    width: 10px;
+}
+::-webkit-scrollbar-button {
+    background-color: oklch(37.3% 0.034 259.733);
+}
+::-webkit-scrollbar-track {
+    background-color: oklch(21% 0.034 264.665);
+}
+::-webkit-scrollbar-thumb {
+    background-color: oklch(37.3% 0.034 259.733);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: oklch(44.6% 0.03 256.802);
+}
+
 .neon-text {
     text-shadow: 0 0 5px currentColor, 0 0 10px currentColor,
         0 0 15px currentColor, 0 0 20px currentColor;

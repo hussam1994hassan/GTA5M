@@ -20,24 +20,22 @@ const AuthLayout = () => {
     }
 
     return (
-      
-    <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden relative">
-      <Toaster position="top-center" reverseOrder={false} />
-      {/* Background Layer - Fixed position with all effects */}
-      <Background />
-      
-      {/* Header Layer - Fixed navigation */}
-      <HeaderComponent />
-      
-      {/* Main Content Layer */}
-      <main className="relative z-20">
-        <Outlet />
-      </main>
-      
-      {/* Footer Layer */}
-      <FooterComponent />
-    </div>
-     
+        <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden relative">
+            <Toaster position="top-center" reverseOrder={false} />
+            {/* Background Layer - Fixed position with all effects */}
+            {/* <Background /> */}
+
+            {/* Header Layer - Fixed navigation */}
+            {/* <HeaderComponent /> */}
+
+            {/* Main Content Layer */}
+            <main className="relative z-20">
+                <Outlet />
+            </main>
+
+            {/* Footer Layer */}
+            {/* <FooterComponent /> */}
+        </div>
     );
 };
 

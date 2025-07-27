@@ -54,6 +54,9 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    "discord_client_id" => env("DISCORD_CLIENT_ID", ""),
+    "discord_client_secret" => env("DISCORD_CLIENT_SECRET", ""),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

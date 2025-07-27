@@ -17,7 +17,7 @@ import {
 import toast from "react-hot-toast";
 import PagesURL from "../../constants/PagesURL";
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/reducers/authSlice";
+import { loginUser } from "../../redux/reducers/authSlice";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -75,14 +75,16 @@ const LoginPage = () => {
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
         // Here you would typically make an API call
-        console.log("Logging in...", formData);
+        // console.log("Logging in...", formData);
 
         setIsLoading(false);
 
-        // Show success notification
-        toast.success("Login successful!");
-
-        dispatch(login());
+        try {
+            await dispatch(loginUser(formData)).unwrap();
+            toast.success("Logged in successfully!");
+        } catch (err) {
+            toast.error(err);
+        }
     };
 
     const handleKeyPress = (e) => {

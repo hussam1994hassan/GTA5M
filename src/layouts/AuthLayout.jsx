@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
-import Background from "../layouts/Background";
+import Background from "../components/Background";
 import LoadingComponent from "../components/LoadingComponent";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -15,9 +15,11 @@ const AuthLayout = () => {
     if (status == "loading") return <LoadingComponent />;
 
     // Check User isAuthenticated
-    if (status == "success" && !isAuthenticated) {
+    if (status == "failed" && !isAuthenticated) {
         return <Navigate to={PagesURL.LOGIN.URL} replace />;
     }
+
+    console.log(status, isAuthenticated);
 
     return (
         <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden relative">

@@ -3,7 +3,7 @@ import axios from "axios";
 
 // إنشاء instance جديدة من axios
 const axiosClient = axios.create({
-    baseURL: "/api", // غيّر هذا حسب سيرفرك
+    baseURL: "http://localhost:3000/api/user", // غيّر هذا حسب سيرفرك
     headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

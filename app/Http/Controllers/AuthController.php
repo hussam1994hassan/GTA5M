@@ -44,6 +44,8 @@ class AuthController extends Controller
 
             $discordUser = $userResponse->json();
 
+            $discordUser['avatar'] = "https://cdn.discordapp.com/avatars/{$discordUser['id']}/{$discordUser['avatar']}.png";
+
             // هنا يمكنك حفظ المستخدم في قاعدة البيانات إذا أردت
             // مثلاً:
             // $user = User::updateOrCreate([...]);

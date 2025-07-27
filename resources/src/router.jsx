@@ -17,6 +17,8 @@ import ADashboardPage from "./pages/admin/ADashboardPage";
 import LoginPage from "./pages/guest/LoginPage";
 import LoginWithDiscordPage from "./pages/guest/LoginWithDiscordPage";
 import AuthDiscordCallbackPage from "./pages/guest/AuthDiscordCallbackPage";
+import BlankLayout from "./layouts/BlankLayout";
+import CheckoutPage from "./pages/guest/CheckoutPage";
 
 const router = createBrowserRouter([
     {
@@ -39,6 +41,12 @@ const router = createBrowserRouter([
                 path: PagesURL.REGISTER.URL,
                 element: <RegisterPage />,
             },
+        ],
+    },
+    {
+        path: PagesURL.ROOT.URL,
+        element: <BlankLayout />,
+        children: [
             {
                 path: PagesURL.TERMS.URL,
                 element: <TermsPage />,
@@ -50,6 +58,10 @@ const router = createBrowserRouter([
             {
                 path: PagesURL.STORE.URL,
                 element: <Store />,
+            },
+            {
+                path: PagesURL.CHECKOUT.URL,
+                element: <CheckoutPage />,
             },
         ],
     },

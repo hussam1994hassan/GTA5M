@@ -63,6 +63,11 @@ const PagesURL = {
         URL: "/settings",
         ICON: HiCog6Tooth,
     },
+    CHECKOUT: {
+        TITLE: "Checkout",
+        URL: "/checkout",
+        ICON: MdOutlinePayments,
+    },
     DOCS: {
         TITLE: "Documentation",
         URL: "/docs",

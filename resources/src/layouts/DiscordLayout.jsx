@@ -8,7 +8,7 @@ import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import PagesURL from "../constants/PagesURL";
 
-const CustomerLayout = () => {
+const DiscordLayout = () => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const status = useSelector((state) => state.auth.status);
 
@@ -39,4 +39,4 @@ const CustomerLayout = () => {
     );
 };
 
-export default CustomerLayout;
+export default DiscordLayout;

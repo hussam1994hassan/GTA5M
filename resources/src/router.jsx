@@ -21,6 +21,7 @@ import BlankLayout from "./layouts/BlankLayout";
 import CheckoutPage from "./pages/guest/CheckoutPage";
 import ContactPage from "./pages/guest/ContactPage";
 import SupportTicketsPage from "./pages/auth/SupportTicketsPage";
+import DiscordCheckPage from "./pages/customer/DiscordCheckPage";
 
 const router = createBrowserRouter([
     {
@@ -107,7 +108,10 @@ const router = createBrowserRouter([
         path: PagesURL.DISCORD_CALLBACK.URL,
         element: <AuthDiscordCallbackPage />,
     },
-
+    {
+        path: PagesURL.DISCORD_CHECK.URL,
+        element: <DiscordCheckPage />,
+    },
     {
         path: PagesURL.DOCS.URL,
         element: <DocsPage />,

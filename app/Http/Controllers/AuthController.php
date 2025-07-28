@@ -48,24 +48,35 @@ class AuthController extends Controller
 
             $discordUser['avatar'] = "https://cdn.discordapp.com/avatars/{$discordUser['id']}/{$discordUser['avatar']}.png";
 
-            // هنا يمكنك حفظ المستخدم في قاعدة البيانات إذا أردت
-            // مثلاً:
-            // $user = User::updateOrCreate([...]);
-
-            discordUsers::updateOrCreate(
-                [
-                    'discord_id' => $discordUser['id'],
-                    'username' => $discordUser['username'],
+            $user = discordUsers::updateOrCreate(
+                    ['discord_id' => $discordUser['id']], // الشرط
+                    ['username' => $discordUser['username'],
                     'email' => $discordUser['email'] ?? null,
                     'avatar' => $discordUser['avatar'],
                     'secret' => Str::random(60), // يمكنك استخدام secret لتوليد رمز فريد للمستخدم
                 ]
             );
 
-            return response()->json($discordUser, 200);
+            if (!$user) {
+                return response()->json(['error' => 'Failed to create or update user'], 500);
+            }
+
+            return redirect()->to('/discord/check/' . $user->secret);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function discordCheck(Request $request)
+    {
+        $user = discordUsers::where('secret', $request->secret)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'Invalid secret'], 404);
+        }
+
+        // يمكنك هنا تنفيذ أي منطق إضافي بعد التحقق من المستخدم
+        return response()->json(['message' => 'User is authenticated', 'user' => $user]);
     }
 
 }

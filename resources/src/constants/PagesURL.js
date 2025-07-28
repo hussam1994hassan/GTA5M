@@ -28,6 +28,16 @@ const PagesURL = {
         URL: "/discord/callback",
         ICON: IoLogInOutline,
     },
+    SUPPORT_TICKETS: {
+        TITLE: "Support Tickets",
+        URL: "/support-tickets",
+        ICON: IoLogInOutline,
+    },
+    CONTACT_PAGE: {
+        TITLE: "Contact Us",
+        URL: "/contact",
+        ICON: IoLogInOutline,
+    },
     REGISTER: {
         TITLE: "Register",
         URL: "/register",
@@ -52,16 +62,6 @@ const PagesURL = {
         TITLE: "Dashboard",
         URL: "/dashboard",
         ICON: HiMiniSquares2X2,
-    },
-    SupportTicketsPage: {
-        TITLE: "Support Tickets",
-        URL: "/support-tickets",
-        ICON: SupportTicketsPage,
-    },
-    ContactPage: {
-        TITLE: "Contact Us",
-        URL: "/contact",
-        ICON: ContactPage,
     },
     PAYMENTS: {
         TITLE: "Payments",

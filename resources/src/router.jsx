@@ -20,6 +20,7 @@ import AuthDiscordCallbackPage from "./pages/guest/AuthDiscordCallbackPage";
 import BlankLayout from "./layouts/BlankLayout";
 import CheckoutPage from "./pages/guest/CheckoutPage";
 import ContactPage from "./pages/guest/ContactPage";
+import SupportTicketsPage from "./pages/auth/SupportTicketsPage";
 
 const router = createBrowserRouter([
     {
@@ -86,22 +87,22 @@ const router = createBrowserRouter([
                 path: PagesURL.PAYMENTS.URL,
                 element: <PaymentsPage />,
             },
-        ],
-    },
-    {
-        path: PagesURL.ADMIN.URL,
-        element: <AdminLayout />,
-        children: [
-            {
-                path: PagesURL.ADMIN.URL,
-                element: <ADashboardPage />,
-            },
             {
                 path: PagesURL.SUPPORT_TICKETS.URL,
                 element: <SupportTicketsPage />,
             },
         ],
     },
+    // {
+    //     path: PagesURL.ADMIN.URL,
+    //     element: <AdminLayout />,
+    //     children: [
+    //         {
+    //             path: PagesURL.ADMIN.URL,
+    //             element: <ADashboardPage />,
+    //         },
+    //     ],
+    // },
     {
         path: PagesURL.DISCORD_CALLBACK.URL,
         element: <AuthDiscordCallbackPage />,

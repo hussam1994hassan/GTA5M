@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\discordUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -49,6 +51,16 @@ class AuthController extends Controller
             // هنا يمكنك حفظ المستخدم في قاعدة البيانات إذا أردت
             // مثلاً:
             // $user = User::updateOrCreate([...]);
+
+            discordUsers::updateOrCreate(
+                [
+                    'discord_id' => $discordUser['id'],
+                    'username' => $discordUser['username'],
+                    'email' => $discordUser['email'] ?? null,
+                    'avatar' => $discordUser['avatar'],
+                    'secret' => Str::random(60), // يمكنك استخدام secret لتوليد رمز فريد للمستخدم
+                ]
+            );
 
             return response()->json($discordUser, 200);
         } catch (\Exception $e) {

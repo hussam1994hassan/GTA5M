@@ -53,16 +53,16 @@ const PagesURL = {
         URL: "/dashboard",
         ICON: HiMiniSquares2X2,
     },
-    SupportTicketsPage: {
-        TITLE: "Support Tickets",
-        URL: "/support-tickets",
-        ICON: SupportTicketsPage,
-    },
-    ContactPage: {
-        TITLE: "Contact Us",
-        URL: "/contact",
-        ICON: ContactPage,
-    },
+    // SupportTicketsPage: {
+    //     TITLE: "Support Tickets",
+    //     URL: "/support-tickets",
+    //     ICON: SupportTicketsPage,
+    // },
+    // ContactPage: {
+    //     TITLE: "Contact Us",
+    //     URL: "/contact",
+    //     ICON: ContactPage,
+    // },
     PAYMENTS: {
         TITLE: "Payments",
         URL: "/payments",

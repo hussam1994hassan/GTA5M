@@ -19,7 +19,6 @@ import LoginWithDiscordPage from "./pages/guest/LoginWithDiscordPage";
 import AuthDiscordCallbackPage from "./pages/guest/AuthDiscordCallbackPage";
 import BlankLayout from "./layouts/BlankLayout";
 import CheckoutPage from "./pages/guest/CheckoutPage";
-import ContactPage from "./pages/guest/ContactPage";
 
 const router = createBrowserRouter([
     {

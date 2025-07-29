@@ -23,9 +23,24 @@ const PagesURL = {
         URL: "/login-with-discord",
         ICON: IoLogInOutline,
     },
+    DISCORD_CHECK: {
+        TITLE: "Discord Check",
+        URL: "/discord/check/:secret",
+        ICON: IoLogInOutline,
+    },
     DISCORD_CALLBACK: {
         TITLE: "Discord Callback",
         URL: "/discord/callback",
+        ICON: IoLogInOutline,
+    },
+    SUPPORT_TICKETS: {
+        TITLE: "Support Tickets",
+        URL: "/support-tickets",
+        ICON: IoLogInOutline,
+    },
+    CONTACT_PAGE: {
+        TITLE: "Contact Us",
+        URL: "/contact",
         ICON: IoLogInOutline,
     },
     REGISTER: {
@@ -53,16 +68,16 @@ const PagesURL = {
         URL: "/dashboard",
         ICON: HiMiniSquares2X2,
     },
-    // SupportTicketsPage: {
-    //     TITLE: "Support Tickets",
-    //     URL: "/support-tickets",
-    //     ICON: SupportTicketsPage,
-    // },
-    // ContactPage: {
-    //     TITLE: "Contact Us",
-    //     URL: "/contact",
-    //     ICON: ContactPage,
-    // },
+    SupportTicketsPage: {
+        TITLE: "Support Tickets",
+        URL: "/support-tickets",
+        ICON: SupportTicketsPage,
+    },
+    ContactPage: {
+        TITLE: "Contact Us",
+        URL: "/contact",
+        ICON: ContactPage,
+    },
     PAYMENTS: {
         TITLE: "Payments",
         URL: "/payments",

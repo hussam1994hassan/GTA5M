@@ -19,6 +19,9 @@ import LoginWithDiscordPage from "./pages/guest/LoginWithDiscordPage";
 import AuthDiscordCallbackPage from "./pages/guest/AuthDiscordCallbackPage";
 import BlankLayout from "./layouts/BlankLayout";
 import CheckoutPage from "./pages/guest/CheckoutPage";
+import DiscordCheckPage from "./pages/customer/DiscordCheckPage";
+import SupportTicketsPage from "./pages/auth/SupportTicketsPage";
+import ContactPage from "./pages/guest/ContactPage";
 
 const router = createBrowserRouter([
     {
@@ -41,10 +44,10 @@ const router = createBrowserRouter([
                 path: PagesURL.REGISTER.URL,
                 element: <RegisterPage />,
             },
-            // {
-            //     path: PagesURL.CONTACT_PAGE.URL,
-            //     element: <ContactPage />,
-            // },
+            {
+                 path: PagesURL.CONTACT_PAGE.URL,
+                 element: <ContactPage />,
+             },
         ],
     },
     {
@@ -85,6 +88,10 @@ const router = createBrowserRouter([
                 path: PagesURL.PAYMENTS.URL,
                 element: <PaymentsPage />,
             },
+            {
+                path: PagesURL.SUPPORT_TICKETS.URL,
+                element: <SupportTicketsPage />,
+            },
         ],
     },
     {
@@ -94,10 +101,6 @@ const router = createBrowserRouter([
             {
                 path: PagesURL.ADMIN.URL,
                 element: <ADashboardPage />,
-            },
-            {
-                path: PagesURL.SUPPORT_TICKETS.URL,
-                element: <SupportTicketsPage />,
             },
         ],
     },

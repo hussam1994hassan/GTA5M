@@ -20,8 +20,6 @@ const AuthLayout = () => {
         return <Navigate to={PagesURL.LOGIN.URL} replace />;
     }
 
-    console.log(user?.role);
-
     if (user?.role !== "admin") {
         return <Navigate to={PagesURL.DISCORD_DASHBOARD.URL} replace />;
     }

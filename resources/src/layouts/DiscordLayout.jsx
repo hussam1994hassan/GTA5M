@@ -1,35 +1,27 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
 import Background from "../components/Background";
 import LoadingComponent from "../components/LoadingComponent";
 import { Toaster } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
 import PagesURL from "../constants/PagesURL";
-import { discordCheck } from "../redux/store";
+import { useSelector } from "react-redux";
 
 const DiscordLayout = () => {
-    const dispatch = useDispatch();
-    const secret = localStorage.getItem("secret");
-
-    useEffect(() => {
-        dispatch(discordCheck({ secret }));
-    }, [dispatch]);
-
-    const isAuthenticated = useSelector(
-        (state) => state.discord.isAuthenticated
-    );
-
-    const status = useSelector((state) => state.discord.status);
-
-    console.log(isAuthenticated, status);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const status = useSelector((state) => state.auth.status);
+    const user = useSelector((state) => state.auth.user);
 
     if (status == "loading") return <LoadingComponent />;
 
     // Check User isAuthenticated
     if (status == "failed" && !isAuthenticated) {
         return <Navigate to={PagesURL.LOGIN_WITH_DISCORD.URL} replace />;
+    }
+
+    if (user?.role == "admin") {
+        return <Navigate to={PagesURL.DASHBOARD.URL} replace />;
     }
 
     return (

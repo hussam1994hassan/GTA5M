@@ -19,9 +19,12 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'discord_id',
         'name',
         'email',
         'password',
+        'avatar',
+        'role',
     ];
 
     /**

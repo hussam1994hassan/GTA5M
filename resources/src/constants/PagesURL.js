@@ -23,11 +23,6 @@ const PagesURL = {
         URL: "/login-with-discord",
         ICON: IoLogInOutline,
     },
-    DISCORD_CHECK: {
-        TITLE: "Discord Check",
-        URL: "/discord/check/:secret",
-        ICON: IoLogInOutline,
-    },
     DISCORD_CALLBACK: {
         TITLE: "Discord Callback",
         URL: "/discord/callback",

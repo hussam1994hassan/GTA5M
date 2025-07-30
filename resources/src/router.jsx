@@ -20,7 +20,6 @@ import LoginWithDiscordPage from "./pages/guest/LoginWithDiscordPage";
 import AuthDiscordCallbackPage from "./pages/guest/AuthDiscordCallbackPage";
 import BlankLayout from "./layouts/BlankLayout";
 import CheckoutPage from "./pages/guest/CheckoutPage";
-import DiscordCheckPage from "./pages/discord/DiscordCheckPage";
 import SupportTicketsPage from "./pages/auth/SupportTicketsPage";
 import ContactPage from "./pages/guest/ContactPage";
 import DiscordDashboard from "./pages/discord/DiscordDashboard";
@@ -129,10 +128,6 @@ const router = createBrowserRouter([
     {
         path: PagesURL.DISCORD_CALLBACK.URL,
         element: <AuthDiscordCallbackPage />,
-    },
-    {
-        path: PagesURL.DISCORD_CHECK.URL,
-        element: <DiscordCheckPage />,
     },
     {
         path: PagesURL.DOCS.URL,

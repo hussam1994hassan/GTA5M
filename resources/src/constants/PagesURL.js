@@ -33,6 +33,11 @@ const PagesURL = {
         URL: "/discord/callback",
         ICON: IoLogInOutline,
     },
+    DISCORD_DASHBOARD: {
+        TITLE: "Discord Dashboard",
+        URL: "/discord/dashboard",
+        ICON: IoLogInOutline,
+    },
     SUPPORT_TICKETS: {
         TITLE: "Support Tickets",
         URL: "/support-tickets",

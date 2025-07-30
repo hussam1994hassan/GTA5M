@@ -76,7 +76,7 @@ class AuthController extends Controller
         }
 
         // يمكنك هنا تنفيذ أي منطق إضافي بعد التحقق من المستخدم
-        return response()->json(['message' => 'User is authenticated', 'user' => $user]);
+        return response()->json(['user' => $user]);
     }
 
 }

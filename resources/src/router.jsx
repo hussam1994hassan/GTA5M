@@ -13,16 +13,16 @@ import PaymentsPage from "./pages/auth/PaymentsPage";
 import DocsPage from "./pages/auth/DocsPage";
 import ErrorPage from "./pages/ErrorPage";
 import AdminLayout from "./layouts/AdminLayout";
+import DiscordLayout from "./layouts/DiscordLayout";
 import ADashboardPage from "./pages/admin/ADashboardPage";
 import LoginPage from "./pages/guest/LoginPage";
 import LoginWithDiscordPage from "./pages/guest/LoginWithDiscordPage";
 import AuthDiscordCallbackPage from "./pages/guest/AuthDiscordCallbackPage";
 import BlankLayout from "./layouts/BlankLayout";
 import CheckoutPage from "./pages/guest/CheckoutPage";
-import DiscordCheckPage from "./pages/customer/DiscordCheckPage";
 import SupportTicketsPage from "./pages/auth/SupportTicketsPage";
 import ContactPage from "./pages/guest/ContactPage";
-import ServerStore from "./pages/guest/FiveMPlatformHomepage";
+
 const router = createBrowserRouter([
     {
         path: PagesURL.ROOT.URL,
@@ -45,9 +45,19 @@ const router = createBrowserRouter([
                 element: <RegisterPage />,
             },
             {
-                 path: PagesURL.CONTACT_PAGE.URL,
-                 element: <ContactPage />,
-             },
+                path: PagesURL.CONTACT_PAGE.URL,
+                element: <ContactPage />,
+            },
+        ],
+    },
+    {
+        path: PagesURL.ROOT.URL,
+        element: <DiscordLayout />,
+        children: [
+            {
+                path: PagesURL.DISCORD_DASHBOARD.URL,
+                element: <DiscordDashboard />,
+            },
         ],
     },
     {
@@ -121,10 +131,6 @@ const router = createBrowserRouter([
     {
         path: PagesURL.DISCORD_CALLBACK.URL,
         element: <AuthDiscordCallbackPage />,
-    },
-    {
-        path: PagesURL.DISCORD_CHECK.URL,
-        element: <DiscordCheckPage />,
     },
     {
         path: PagesURL.DOCS.URL,

@@ -11,12 +11,17 @@ import LoadingComponent from "../components/LoadingComponent";
 const GuestLayout = () => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const status = useSelector((state) => state.auth.status);
+    const user = useSelector((state) => state.auth.user);
 
     if (status == "loading") return <LoadingComponent />;
 
     // Check User unAuthenticated
     if (status == "succeeded" && isAuthenticated) {
-        return <Navigate to={PagesURL.DASHBOARD.URL} replace />;
+        return user?.role == "admin" ? (
+            <Navigate to={PagesURL.DASHBOARD.URL} replace />
+        ) : (
+            <Navigate to={PagesURL.DISCORD_DASHBOARD.URL} replace />
+        );
     }
 
     return (

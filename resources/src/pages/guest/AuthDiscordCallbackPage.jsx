@@ -14,9 +14,9 @@ const AuthDiscordCallbackPage = () => {
             axiosClient
                 .get(`/discord/callback?code=${code}`)
                 .then((res) => {
-                    console.log("User info:", res.data);
+                    localStorage.setItem("token", res?.data?.token);
                     // يمكنك تخزين user في localStorage أو redux
-                    // navigate("/dashboard");
+                    navigate("/discord/dashboard");
                 })
                 .catch((err) => {
                     console.error("Error logging in with Discord:", err);

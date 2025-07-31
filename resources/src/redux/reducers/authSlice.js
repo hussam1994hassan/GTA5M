@@ -38,23 +38,6 @@ export const createUser = createAsyncThunk(
     }
 );
 
-export const discordCheck = createAsyncThunk(
-    "discord/check",
-    async ({ secret }, { rejectWithValue }) => {
-        try {
-            const res = await axiosClient.post(`/discord/check`, {
-                secret,
-            });
-            const { user } = res.data;
-            return user;
-        } catch (err) {
-            return rejectWithValue(
-                err.response?.data?.message || "User creation failed!"
-            );
-        }
-    }
-);
-
 export const checkAuth = createAsyncThunk(
     "auth/checkAuth",
     async (_, { rejectWithValue }) => {
@@ -115,21 +98,6 @@ const authSlice = createSlice({
                 state.user = null;
                 state.token = null;
                 localStorage.removeItem("token");
-            })
-
-            .addCase(discordCheck.pending, (state) => {
-                state.status = "loading";
-            })
-            .addCase(discordCheck.fulfilled, (state, action) => {
-                state.status = "succeeded";
-                state.userDiscord = action.payload.user;
-            })
-            .addCase(discordCheck.rejected, (state) => {
-                state.status = "failed";
-                state.isAuthenticated = false;
-                state.userDiscord = null;
-                state.secret = null;
-                localStorage.removeItem("secret");
             })
 
             // 🟢 تسجيل الدخول

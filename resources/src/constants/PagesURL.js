@@ -28,14 +28,14 @@ const PagesURL = {
         URL: "/discord/check/:secret",
         ICON: IoLogInOutline,
     },
-    ServerStore: {
-        TITLE: "Server Store",
-        URL: "/server-store",
-        ICON: IoLogInOutline,
-    },
     DISCORD_CALLBACK: {
         TITLE: "Discord Callback",
         URL: "/discord/callback",
+        ICON: IoLogInOutline,
+    },
+    DISCORD_DASHBOARD: {
+        TITLE: "Discord Dashboard",
+        URL: "/discord/dashboard",
         ICON: IoLogInOutline,
     },
     SUPPORT_TICKETS: {

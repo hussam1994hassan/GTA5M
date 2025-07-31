@@ -11,12 +11,17 @@ import PagesURL from "../constants/PagesURL";
 const AuthLayout = () => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const status = useSelector((state) => state.auth.status);
+    const user = useSelector((state) => state.auth.user);
 
     if (status == "loading") return <LoadingComponent />;
 
     // Check User isAuthenticated
     if (status == "failed" && !isAuthenticated) {
         return <Navigate to={PagesURL.LOGIN.URL} replace />;
+    }
+
+    if (user?.role !== "admin") {
+        return <Navigate to={PagesURL.DISCORD_DASHBOARD.URL} replace />;
     }
 
     return (

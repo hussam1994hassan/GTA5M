@@ -5,28 +5,33 @@ import FooterComponent from "../components/FooterComponent";
 import Background from "../components/Background";
 import LoadingComponent from "../components/LoadingComponent";
 import { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
 import PagesURL from "../constants/PagesURL";
+import { useSelector } from "react-redux";
 
 const DiscordLayout = () => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const status = useSelector((state) => state.auth.status);
+    const user = useSelector((state) => state.auth.user);
 
     if (status == "loading") return <LoadingComponent />;
 
     // Check User isAuthenticated
     if (status == "failed" && !isAuthenticated) {
-        return <Navigate to={PagesURL.LOGIN.URL} replace />;
+        return <Navigate to={PagesURL.LOGIN_WITH_DISCORD.URL} replace />;
+    }
+
+    if (user?.role == "admin") {
+        return <Navigate to={PagesURL.DASHBOARD.URL} replace />;
     }
 
     return (
         <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden relative">
             <Toaster position="top-center" reverseOrder={false} />
             {/* Background Layer - Fixed position with all effects */}
-            {/* <Background /> */}
+            <Background />
 
             {/* Header Layer - Fixed navigation */}
-            {/* <HeaderComponent /> */}
+            <HeaderComponent />
 
             {/* Main Content Layer */}
             <main className="relative z-20">
@@ -34,7 +39,7 @@ const DiscordLayout = () => {
             </main>
 
             {/* Footer Layer */}
-            {/* <FooterComponent /> */}
+            <FooterComponent />
         </div>
     );
 };

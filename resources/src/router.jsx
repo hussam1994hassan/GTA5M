@@ -22,7 +22,7 @@ import CheckoutPage from "./pages/guest/CheckoutPage";
 import DiscordCheckPage from "./pages/customer/DiscordCheckPage";
 import SupportTicketsPage from "./pages/auth/SupportTicketsPage";
 import ContactPage from "./pages/guest/ContactPage";
-
+import ServerStore from "./pages/guest/FiveMPlatformHomepage";
 const router = createBrowserRouter([
     {
         path: PagesURL.ROOT.URL,
@@ -65,6 +65,10 @@ const router = createBrowserRouter([
             {
                 path: PagesURL.STORE.URL,
                 element: <Store />,
+            },
+            {
+                path: PagesURL.ServerStore.URL,
+                element: <ServerStore />,
             },
             {
                 path: PagesURL.CHECKOUT.URL,

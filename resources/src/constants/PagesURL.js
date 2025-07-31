@@ -38,6 +38,11 @@ const PagesURL = {
         URL: "/discord/dashboard",
         ICON: IoLogInOutline,
     },
+    ServerStore: {
+        TITLE: "Server Store",
+        URL: "/server-store",
+        ICON: IoLogInOutline,
+    },
     SUPPORT_TICKETS: {
         TITLE: "Support Tickets",
         URL: "/support-tickets",

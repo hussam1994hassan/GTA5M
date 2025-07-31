@@ -22,7 +22,8 @@ import BlankLayout from "./layouts/BlankLayout";
 import CheckoutPage from "./pages/guest/CheckoutPage";
 import SupportTicketsPage from "./pages/auth/SupportTicketsPage";
 import ContactPage from "./pages/guest/ContactPage";
-
+import DiscordDashboard from "./pages/discord/DiscordDashboard";
+import ServerStore from "./pages/guest/ServerStorePage";
 const router = createBrowserRouter([
     {
         path: PagesURL.ROOT.URL,
